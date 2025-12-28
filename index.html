@@ -100,36 +100,23 @@
 			align-items: center;
 			justify-content: center;
 			gap: 3rem;
-			margin: 6rem 0.5rem 0.5rem 0.5rem;
+			margin: 6rem 1rem 1rem 1rem;
 		}
 		.sites {
-			width: clamp(200px, 20%, 300px);
+			width: clamp(150px, 20%, 260px);
 			aspect-ratio: 1 / 1;
 			background: linear-gradient(to bottom right, #00c4cc 0%,#6f00ff 100%);
 			border-radius: 0.5rem;
 			border: 2px solid gold;
 			position: relative;
 			overflow: hidden;
-			box-shadow: 0px 2px 6px black;
-			animation: float 5s ease infinite;
+			box-shadow: 0 0 6px black;
+			transition: all 0.3s ease;
 			cursor: pointer;
 		}
-		.sites:nth-child(even) {
-			animation-delay: 0s;
-		}
-		.sites:nth-child(odd) {
-			animation-delay: 1s;
-		}
-		@keyframes float {
-			0%, 100% {
-				transform: translateY(0px);
-			}
-			25%, 75% {
-				transform: translateY(10px);
-			}
-			50% {
-				transform: translateY(-10px);
-			}
+		.sites:hover {
+			transform: scale(1.05);
+			box-shadow: 0 0 12px 1px white;
 		}
 		.site-name {
 			position: absolute;
@@ -138,9 +125,11 @@
 			bottom: 0;
 			left: 0;
 			background-color: var(--text-bg);
-			text-align: center;
 			padding: 0.4rem;
 			font-size: 1.6rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			color: var(--text);
 		}
 		.bottom-ad-cover {
@@ -152,6 +141,16 @@
 			transform: translateX(-50%);
 			background-color: rgba(100, 100, 200, 0.8);
 			border-radius: 1rem;
+		}
+		@media(max-width: 950px) {
+			.site-name {
+				font-size: 1.3rem;
+			}
+		}
+		@media(max-width: 780px) {
+			.site-name {
+				font-size: 1.2rem;
+			}
 		}
 	</style>
 </head>
