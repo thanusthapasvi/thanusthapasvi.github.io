@@ -45,6 +45,12 @@
 		h1 {
 			color: var(--text);
 		}
+		h2 {
+			position: absolute;
+			top: 1rem;
+			text-align: center;
+			color: var(--text);
+		}
 		header {
 			width: 100%;
 			padding: 0.5rem;
@@ -82,12 +88,19 @@
 			top: 3.5rem;
 			left: 50%;
 			transform: translateX(-50%);
-			gap: 3rem;
 			background: radial-gradient(circle at 50% 100%, var(--bg-grad-1) 5%, var(--bg-grad-2)),
 			linear-gradient(to right, #00c4cc 0%,#6f00ff 100%);
 			display: flex;
 			align-items: center;
+			flex-direction: column;
+		}
+		.sites-cover {
+			width: 100%;
+			display: flex;
+			align-items: center;
 			justify-content: center;
+			gap: 3rem;
+			margin: 6rem 0.5rem 0.5rem 0.5rem;
 		}
 		.sites {
 			width: clamp(200px, 20%, 300px);
@@ -97,8 +110,15 @@
 			border: 2px solid gold;
 			position: relative;
 			overflow: hidden;
-			box-shadow: 0 0 6px 1px black;
+			box-shadow: 0px 2px 6px black;
 			animation: float 5s ease infinite;
+			cursor: pointer;
+		}
+		.sites:nth-child(even) {
+			animation-delay: 0s;
+		}
+		.sites:nth-child(odd) {
+			animation-delay: 1s;
 		}
 		@keyframes float {
 			0%, 100% {
@@ -123,6 +143,16 @@
 			font-size: 1.6rem;
 			color: var(--text);
 		}
+		.bottom-ad-cover {
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			width: clamp(280px, 100%, 1000px);
+			max-height: 180px;
+			transform: translateX(-50%);
+			background-color: rgba(100, 100, 200, 0.8);
+			border-radius: 1rem;
+		}
 	</style>
 </head>
 <body class="light">
@@ -135,8 +165,23 @@
 		</button>
 	</header>
 	<main>
-		<div class="sites">
-			<p class="site-name">Dragon Game</p>
+		<h2>Hero few sites I made</h2>
+		<div class="sites-cover">
+			<div class="sites">
+				<p class="site-name">Dragon Game</p>
+			</div>
+			<div class="sites">
+				<p class="site-name">Expense Tracker</p>
+			</div>
+		</div>
+		<div class="bottom-ad-cover">
+			<ins class="adsbygoogle"
+			     style="display:block"
+			     data-ad-client="ca-pub-7863022341647653"
+			     data-ad-slot="7244478817"
+			     data-ad-format="auto"
+			     data-full-width-responsive="true"></ins>
+			<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 		</div>
 	</main>
 </div>
@@ -162,11 +207,13 @@
 		    }
 		}
 
-		document.querySelectorAll(".sites").forEach(site => {
-			site.addEventListener('click', () => {
+		const sites = document.querySelectorAll(".sites")
+			sites[0].addEventListener('click', () => {
 				window.open("https://thanusthapasvi.github.io/dragon-game/", "_blank");
 			});
-		});
+			sites[1].addEventListener('click', () => {
+				window.open("https://thanusthapasvi.github.io/Expense-Tracker/", "_blank");
+			});
 	</script>
 </body>
 </html>
