@@ -26,7 +26,7 @@
 			--header-bg: rgb(30, 30, 100);
 			--button-bg: rgb(80, 80, 80);
 			--text: white;
-			--main-bg: rgb(20, 20, 100);
+			--main-bg: rgb(50, 50, 150);
 			--text-bg: rgba(10, 10, 10, 0.5);
 			--bg-grad-1: rgba(25, 25, 25, 0.6);
 			--bg-grad-2: rgba(25, 25, 25, 0);
@@ -42,17 +42,23 @@
 		}
 		body {
 			position: relative;
-			background-color: var(--bg);
+			background: radial-gradient(circle at 50% 50%, var(--bg-grad-1) 5%, var(--bg-grad-2)),
+						linear-gradient(to right, #00c4cc 0%,#6f00ff 100%);
+			overflow-x: hidden;
+			overflow-y: auto;
+    		-webkit-overflow-scrolling: touch;
+		}
+		.border-curve {
+			border-radius: 0.5rem;
+		}
+		.hover-effect {
+			box-shadow: 0 0px 3px var(--text);
+		}
+		.hover-effect:hover {
+			box-shadow: 0 1px 8px 1px var(--text);
 		}
 		h1 {
 			color: var(--text);
-		}
-		h2 {
-			position: absolute;
-			top: 0.8rem;
-			text-align: center;
-			color: var(--text);
-			font-size: 2rem;
 		}
 		header {
 			width: 100%;
@@ -66,7 +72,6 @@
 			justify-content: space-between;
 			background-color: var(--header-bg);
 			box-shadow: 0 2px var(--text);
-			border-bottom: 2px solid var(--text);
 		}
 		.themeButton {
 			padding: 6px;
@@ -85,47 +90,40 @@
 			transform: scale(1.1);
 		}
 		main {
-			position: fixed;
 			width: 100%;
-			height: calc(100% - 3.5rem);
-			top: 3.5rem;
-			left: 50%;
-			transform: translateX(-50%);
-			background: radial-gradient(circle at 50% 100%, var(--bg-grad-1) 5%, var(--bg-grad-2)),
-			linear-gradient(to right, #00c4cc 0%,#6f00ff 100%);
+			margin-top: 3.5rem;
+			padding: 1rem;
 			display: flex;
 			align-items: center;
 			flex-direction: column;
-			overflow-x: hidden;
-			overflow-y: auto;
-    		-webkit-overflow-scrolling: touch;
+			gap: 2rem;
+		}
+		.about {
+			background-color: var(--main-bg);
+		}
+		.about, .sites-cover {
+			padding: 0.7rem;
+			width: 95%;
 		}
 		.sites-cover, .sites {
 			display: flex;
 			align-items: center;
 		}
 		.sites-cover {
-			width: 100%;
-			padding: 0.5rem;
 			gap: 2rem;
-			margin: 3.5rem 1rem 1rem 1rem;
 			flex-direction: column;
 			justify-content: center;
 		}
 		.sites {
 			position: relative;
 			width: clamp(280px, 100%, 1000px);
-			border-radius: 0.5rem;
 			padding: 0.5rem;
 			background-color: var(--main-bg);
 			justify-content: space-between;
-			box-shadow: 0 0px 0px black;
 			gap: 1rem;
 			transition: all 0.3s ease;
 		}
-		.sites:hover {
-			box-shadow: 0 1px 8px black;
-		}
+		
 		.site-image {
 			width: clamp(100px, 20%, 250px);
 			aspect-ratio: 1 / 1;
@@ -135,17 +133,6 @@
 			height: 100%;
 			display: flex;
 			flex-direction: column;
-		}
-		.site-name, .site-des {
-			width: 100%;
-			color: var(--text);
-		}
-		.site-name {
-			font-size: 2rem;
-			font-weight: bold;
-		}
-		.site-des {
-			font-size: 1.2rem;
 		}
 		.open-cover {
 			margin-top: 1rem;
@@ -160,7 +147,6 @@
 			justify-content: center;
 			padding: 0.4rem 0.7rem;
 			font-size: 1.2rem;
-			border-radius: 0.3rem;
 			background: linear-gradient(to bottom, #343488 50%, #5555aa 90%);
 			color: var(--gold);
 			border: 1px solid var(--gold);
@@ -181,6 +167,24 @@
 		}
 		.sites:nth-of-type(even) .open-cover {
 		    justify-content: flex-start;
+		}
+
+		footer {
+			margin: 0.5rem;
+			margin-top: 2rem;
+			color: var(--text);
+			font-size: 0.9rem;
+		}
+		.card-name, .des {
+			width: 100%;
+			color: var(--text);
+		}
+		.card-name {
+			font-size: 2rem;
+			font-weight: bold;
+		}
+		.des {
+			font-size: 1.2rem;
 		}
 		hr {
 			border: 0;
@@ -238,21 +242,12 @@
 				--angle: 360deg;
 			}
 		}
-
-
-		.bottom-ad-cover {
-			position: absolute;
-			bottom: 0;
-			left: 50%;
-			width: clamp(280px, 100%, 1000px);
-			max-height: 180px;
-			transform: translateX(-50%);
-			background-color: rgba(100, 100, 200, 0.8);
-			border-radius: 1rem;
-		}
 		@media(max-width: 380px) {
-			.site-name {
+			.card-name {
 				font-size: 1.6rem;
+			}
+			.des {
+				font-size: 1rem;
 			}
 		}
 	</style>
@@ -267,16 +262,43 @@
 		</button>
 	</header>
 	<main>
-		<h2>Here few sites I made</h2>
-		<div class="sites-cover">
-			<div class="sites border-ani">
+		<section class="about hover-effect border-curve">
+			<h2 class="card-name">Browser-Based Games and Web Apps</h2>
+			<hr>
+			<p class="des">
+			    This website showcases browser-based games and web applications developed
+			    using HTML, CSS, and JavaScript. Each project focuses on clean UI design,
+			    performance, and interactive user experiences that work directly in the browser
+			    without downloads.
+			</p>
+			<p class="des">
+			    The projects below demonstrate practical implementations of game mechanics,
+			    state management, user input handling, and responsive layouts. New features
+			    and projects are added regularly as development continues.
+			</p>
+		</section>
+		<section class="sites-cover">
+			<div class="sites hover-effect border-curve">
 				<img class="site-image" src="assets/placeholder.png" />
 				<div class="site-info">
-					<p class="site-name">Dragon Game</p>
+					<h2 class="card-name">Dragon Game</h2>
 					<hr>
-					<p class="site-des">A role playing game with different locations, play as a hero to defeat monsters to gain xp and gold, level up to defeat a final boss an evil dragon to finish the game. with more functionality coming soon...</p>
+					<p class="des">
+						Dragon Game is a browser-based role-playing game where players explore
+						fantasy locations such as towns, caves, and dragon lairs.
+					</p>
+					<p class="des">
+						Players fight monsters, earn experience points and gold, and level up
+						their hero by unlocking new skills. The goal is to become strong enough
+						to defeat the final boss, an evil dragon.
+					</p>
+					<p class="des">
+						The game is built entirely with JavaScript and runs directly in the browser.
+						Future updates will introduce new heroes, enemies, and gameplay mechanics.
+					</p>
+
 					<div class="open-cover">
-						<button class="open-link" aria-label="open link">
+						<button class="open-link border-curve" aria-label="open link">
 							Open
 							<svg class="arrow" width="28" height="28" viewBox="0 0 28 28" fill="none">
 								<rect width="20" height="4" x="6" y="3" rx="2" fill="var(--gold)"/>
@@ -287,14 +309,22 @@
 					</div>
 				</div>
 			</div>
-			<div class="sites border-ani">
+			<div class="sites hover-effect border-curve">
 				<img class="site-image" src="assets/placeholder.png"/>
 				<div class="site-info">
-					<p class="site-name">Expense Tracker</p>
+					<h2 class="card-name">Expense Tracker</h2>
 					<hr>
-					<p class="site-des">Web based Expense tracker with features set ammount and add your spent amount every time you spent to your balance ammount in real time. with more features coming soon...</p>
+					<p class="des">
+						Expense Tracker is a web-based application designed to help users manage
+						their daily expenses by setting a total budget and tracking spending in real time.
+					</p>
+					<p class="des">
+						The application updates the remaining balance instantly and stores data locally
+						so users can continue tracking their expenses even after closing the browser.
+						Additional features and analytics are planned for future updates.
+					</p>
 					<div class="open-cover">
-						<button class="open-link" aria-label="open link">
+						<button class="open-link border-curve" aria-label="open link">
 							Open
 							<svg class="arrow" width="28" height="28" viewBox="0 0 28 28" fill="none">
 								<rect width="20" height="4" x="6" y="3" rx="2" fill="var(--gold)"/>
@@ -305,8 +335,12 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	</main>
+	<footer>
+		© 2026 Thanus Thapasvi · Built with HTML, CSS & JavaScript
+	</footer>
+
 	<script>
 		let body = document.querySelector('body');
 		let theme = document.querySelector('.themeButton');
