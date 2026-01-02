@@ -8,22 +8,25 @@
 		src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7863022341647653" crossorigin="anonymous">
 	</script>
 	<style>
+		:root {
+			--gold: #ffd900;
+		}
 		.light {
 			--bg: rgb(120, 120, 200);
 			--header-bg: rgb(150, 150, 255);
 			--button-bg: rgb(10, 10, 10);
 			--text: black;
-			--main-bg: rgb(100, 100, 150);
+			--main-bg: rgb(100, 100, 220);
 			--text-bg: rgba(230, 230, 230, 0.5);
 			--bg-grad-1: rgba(200, 200, 200, 0.5);
 			--bg-grad-2: rgba(200, 200, 200, 0);
 		}
 		.dark {
 			--bg: rgb(50, 50, 120);
-			--header-bg: rgb(20, 20, 100);
+			--header-bg: rgb(30, 30, 100);
 			--button-bg: rgb(80, 80, 80);
 			--text: white;
-			--main-bg: rgb(10, 10, 80);
+			--main-bg: rgb(20, 20, 100);
 			--text-bg: rgba(10, 10, 10, 0.5);
 			--bg-grad-1: rgba(25, 25, 25, 0.6);
 			--bg-grad-2: rgba(25, 25, 25, 0);
@@ -40,16 +43,16 @@
 		body {
 			position: relative;
 			background-color: var(--bg);
-			overflow: hidden;
 		}
 		h1 {
 			color: var(--text);
 		}
 		h2 {
 			position: absolute;
-			top: 1rem;
+			top: 0.8rem;
 			text-align: center;
 			color: var(--text);
+			font-size: 2rem;
 		}
 		header {
 			width: 100%;
@@ -93,45 +96,140 @@
 			display: flex;
 			align-items: center;
 			flex-direction: column;
+			overflow-x: hidden;
+			overflow-y: auto;
+    		-webkit-overflow-scrolling: touch;
+		}
+		.sites-cover, .sites {
+			display: flex;
+			align-items: center;
 		}
 		.sites-cover {
 			width: 100%;
-			display: flex;
-			align-items: center;
+			padding: 0.5rem;
+			gap: 2rem;
+			margin: 3.5rem 1rem 1rem 1rem;
+			flex-direction: column;
 			justify-content: center;
-			gap: 3rem;
-			margin: 6rem 1rem 1rem 1rem;
 		}
 		.sites {
-			width: clamp(150px, 20%, 260px);
-			aspect-ratio: 1 / 1;
-			background: linear-gradient(to bottom right, #00c4cc 0%,#6f00ff 100%);
-			border-radius: 0.5rem;
-			border: 2px solid gold;
 			position: relative;
-			overflow: hidden;
-			box-shadow: 0 0 6px black;
+			width: clamp(280px, 100%, 1000px);
+			border-radius: 0.5rem;
+			padding: 0.5rem;
+			background-color: var(--main-bg);
 			transition: all 0.3s ease;
-			cursor: pointer;
+			justify-content: space-between;
+			gap: 1rem;
 		}
-		.sites:hover {
-			transform: scale(1.05);
-			box-shadow: 0 0 12px 1px white;
+		.site-image {
+			width: clamp(100px, 20%, 250px);
+			aspect-ratio: 1 / 1;
+		}
+		.site-info {
+			width: calc(100% - clamp(100px, 20%, 250px));
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+		}
+		.site-name, .site-des {
+			width: 100%;
+			color: var(--text);
 		}
 		.site-name {
-			position: absolute;
+			font-size: 2rem;
+			font-weight: bold;
+		}
+		.site-des {
+			font-size: 1.2rem;
+		}
+		.open-cover {
+			margin-top: 1rem;
+			position: relative;
 			width: 100%;
-			height: 3rem;
-			bottom: 0;
-			left: 0;
-			background-color: var(--text-bg);
-			padding: 0.4rem;
-			font-size: 1.6rem;
+			display: flex;
+			justify-content: end;
+		}
+		.open-link {
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			color: var(--text);
+			padding: 0.4rem 0.7rem;
+			font-size: 1.2rem;
+			border-radius: 0.3rem;
+			background: linear-gradient(to bottom, #343488 50%, #5555aa 90%);
+			color: var(--gold);
+			border: 1px solid var(--gold);
+			border-bottom: 3px solid var(--gold);
+			box-shadow: 0 0 6px black;
+			overflow: hidden;
+			cursor: pointer;
 		}
+		.open-link:hover {
+			box-shadow: 0 0 6px white;
+			background: linear-gradient(to bottom, #5555aa 20%, #343488 50%);
+		}
+		.open-link:active {
+			transform: scale(0.95);
+		}
+		hr {
+			border: 0;
+			height: 1px;
+			background: var(--gold);
+			margin: 0.8rem 0;
+		}
+
+		@keyframes arrow {
+			0%, 100% {
+				transform: translate(0, 0);
+			}
+			50% {
+				transform: translate(2rem, -2rem);
+			}
+		}
+		@property --angle {
+			syntax: "<angle>";
+			inherits: false;
+			initial-value: 0deg;
+		}
+		.border-ani {
+			position: relative;
+		}
+		.border-ani::before {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: calc(100% + 6px);
+			height: calc(100% + 6px);
+			transform: translate(-50%, -50%);
+			background: conic-gradient(from var(--angle) at 50% 50%, var(--gold) 0deg 5deg, transparent 30deg 150deg, var(--gold) 175deg 185deg, transparent 210deg 330deg, var(--gold) 355deg 360deg);
+			animation: borderAni 3s linear infinite;
+			z-index: -1;
+		}
+		.border-ani::before {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: calc(100% + 6px);
+			height: calc(100% + 6px);
+			transform: translate(-50%, -50%);
+			background: conic-gradient(from var(--angle) at 50% 50%, var(--gold) 0deg 5deg, transparent 30deg 150deg, var(--gold) 175deg 185deg, transparent 210deg 330deg, var(--gold) 355deg 360deg);
+			animation: borderAni 3s linear infinite;
+			filter: blur(8px);
+			z-index: -1;
+		}
+		@keyframes borderAni {
+			from {
+				--angle: 0deg;
+			}
+			to {
+				--angle: 360deg;
+			}
+		}
+
+
 		.bottom-ad-cover {
 			position: absolute;
 			bottom: 0;
@@ -142,14 +240,9 @@
 			background-color: rgba(100, 100, 200, 0.8);
 			border-radius: 1rem;
 		}
-		@media(max-width: 950px) {
+		@media(max-width: 380px) {
 			.site-name {
-				font-size: 1.3rem;
-			}
-		}
-		@media(max-width: 780px) {
-			.site-name {
-				font-size: 1.2rem;
+				font-size: 1.6rem;
 			}
 		}
 	</style>
@@ -164,16 +257,46 @@
 		</button>
 	</header>
 	<main>
-		<h2>Hero few sites I made</h2>
+		<h2>Here few sites I made</h2>
 		<div class="sites-cover">
-			<div class="sites">
-				<p class="site-name">Dragon Game</p>
+			<div class="sites border-ani">
+				<img class="site-image" src="assets/placeholder.png" />
+				<div class="site-info">
+					<p class="site-name">Dragon Game</p>
+					<hr>
+					<p class="site-des">A role playing game with different locations, play as a hero to defeat monsters to gain xp and gold, level up to defeat a final boss an evil dragon to finish the game. with more functionality coming soon...</p>
+					<div class="open-cover">
+						<button class="open-link" aria-label="open link">
+							Open
+							<svg class="arrow" width="28" height="28" viewBox="0 0 28 28" fill="none">
+								<rect width="20" height="4" x="6" y="3" rx="2" fill="var(--gold)"/>
+								<rect width="4" height="20" x="22" y="3" rx="2" fill="var(--gold)"/>
+								<rect width="4" height="16" x="17" y="9" rx="2" transform="rotate(45 17 9)" fill="var(--gold)"/>
+							</svg>
+						</button>
+					</div>
+				</div>
 			</div>
-			<div class="sites">
-				<p class="site-name">Expense Tracker</p>
+			<div class="sites border-ani">
+				<img class="site-image" src="assets/placeholder.png"/>
+				<div class="site-info">
+					<p class="site-name">Expense Tracker</p>
+					<hr>
+					<p class="site-des">Web based Expense tracker with features set ammount and add your spent amount every time you spent to your balance ammount in real time. with more features coming soon...</p>
+					<div class="open-cover">
+						<button class="open-link" aria-label="open link">
+							Open
+							<svg class="arrow" width="28" height="28" viewBox="0 0 28 28" fill="none">
+								<rect width="20" height="4" x="6" y="3" rx="2" fill="var(--gold)"/>
+								<rect width="4" height="20" x="22" y="3" rx="2" fill="var(--gold)"/>
+								<rect width="4" height="16" x="17" y="9" rx="2" transform="rotate(45 17 9)" fill="var(--gold)"/>
+							</svg>
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="bottom-ad-cover">
+		<!-- <div class="bottom-ad-cover">
 			<ins class="adsbygoogle"
 			     style="display:block"
 			     data-ad-client="ca-pub-7863022341647653"
@@ -181,7 +304,7 @@
 			     data-ad-format="auto"
 			     data-full-width-responsive="true"></ins>
 			<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-		</div>
+		</div> -->
 	</main>
 </div>
 
@@ -206,13 +329,22 @@
 		    }
 		}
 
-		const sites = document.querySelectorAll(".sites")
-			sites[0].addEventListener('click', () => {
+		const sites = document.querySelectorAll(".open-link")
+		const arrows = document.querySelectorAll(".arrow");
+		sites[0].addEventListener('click', () => {
+			arrows[0].style.animation = "none";
+			arrows[0].style.animation = "arrow 1s ease";
+			setTimeout(() => {
 				window.open("https://thanusthapasvi.github.io/dragon-game/", "_blank");
-			});
-			sites[1].addEventListener('click', () => {
+			}, 500)
+		});
+		sites[1].addEventListener('click', () => {
+			arrows[1].style.animation = "none";
+			arrows[1].style.animation = "arrow 1s ease";
+			setTimeout(() => {
 				window.open("https://thanusthapasvi.github.io/Expense-Tracker/", "_blank");
-			});
+			}, 500)
+		});
 	</script>
 </body>
 </html>
