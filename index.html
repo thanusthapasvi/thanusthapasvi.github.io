@@ -16,7 +16,7 @@
 			--header-bg: rgb(150, 150, 255);
 			--button-bg: rgb(10, 10, 10);
 			--text: black;
-			--main-bg: rgb(100, 100, 220);
+			--main-bg: rgb(120, 120, 220);
 			--text-bg: rgba(230, 230, 230, 0.5);
 			--bg-grad-1: rgba(200, 200, 200, 0.5);
 			--bg-grad-2: rgba(200, 200, 200, 0);
@@ -118,9 +118,13 @@
 			border-radius: 0.5rem;
 			padding: 0.5rem;
 			background-color: var(--main-bg);
-			transition: all 0.3s ease;
 			justify-content: space-between;
+			box-shadow: 0 0px 0px black;
 			gap: 1rem;
+			transition: all 0.3s ease;
+		}
+		.sites:hover {
+			box-shadow: 0 1px 8px black;
 		}
 		.site-image {
 			width: clamp(100px, 20%, 250px);
@@ -148,7 +152,7 @@
 			position: relative;
 			width: 100%;
 			display: flex;
-			justify-content: end;
+			justify-content: flex-end;
 		}
 		.open-link {
 			display: flex;
@@ -171,6 +175,12 @@
 		}
 		.open-link:active {
 			transform: scale(0.95);
+		}
+		.sites:nth-of-type(even) {
+			flex-direction: row-reverse;
+		}
+		.sites:nth-of-type(even) .open-cover {
+		    justify-content: flex-start;
 		}
 		hr {
 			border: 0;
