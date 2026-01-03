@@ -7,250 +7,7 @@
 	<script async 
 		src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7863022341647653" crossorigin="anonymous">
 	</script>
-	<style>
-		:root {
-			--gold: #ffd900;
-		}
-		.light {
-			--bg: rgb(120, 120, 200);
-			--header-bg: rgb(150, 150, 255);
-			--button-bg: rgb(10, 10, 10);
-			--text: black;
-			--main-bg: rgb(120, 120, 220);
-			--text-bg: rgba(230, 230, 230, 0.5);
-			--bg-grad-1: rgba(200, 200, 200, 0.5);
-			--bg-grad-2: rgba(200, 200, 200, 0);
-		}
-		.dark {
-			--bg: rgb(50, 50, 120);
-			--header-bg: rgb(30, 30, 100);
-			--button-bg: rgb(80, 80, 80);
-			--text: white;
-			--main-bg: rgb(50, 50, 150);
-			--text-bg: rgba(10, 10, 10, 0.5);
-			--bg-grad-1: rgba(25, 25, 25, 0.6);
-			--bg-grad-2: rgba(25, 25, 25, 0);
-		}
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-		body, html {
-			width: 100%;
-			height: 100%;
-		}
-		body {
-			position: relative;
-			background: radial-gradient(circle at 50% 50%, var(--bg-grad-1) 5%, var(--bg-grad-2)),
-						linear-gradient(to right, #00c4cc 0%,#6f00ff 100%);
-			overflow-x: hidden;
-			overflow-y: auto;
-    		-webkit-overflow-scrolling: touch;
-		}
-		.border-curve {
-			border-radius: 0.5rem;
-		}
-		.hover-effect {
-			box-shadow: 0 0px 3px var(--text);
-		}
-		.hover-effect:hover {
-			box-shadow: 0 1px 8px 1px var(--text);
-		}
-		h1 {
-			color: var(--text);
-		}
-		header {
-			width: 100%;
-			padding: 0.5rem;
-			height: 3.5rem;
-			top: 0;
-			left: 0;
-			position: fixed;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			background-color: var(--header-bg);
-			box-shadow: 0 2px var(--text);
-		}
-		.themeButton {
-			padding: 6px;
-			border: none;
-			background-color: var(--button-bg);
-			color: #ffffff;
-			transition: transform 0.3s ease;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			cursor: pointer;
-			border-radius: 50%;
-			box-shadow: 0 0 6px 1px black;
-		}
-		.themeButton:hover {
-			transform: scale(1.1);
-		}
-		main {
-			width: 100%;
-			margin-top: 3.5rem;
-			padding: 1rem;
-			display: flex;
-			align-items: center;
-			flex-direction: column;
-			gap: 2rem;
-		}
-		.about {
-			background-color: var(--main-bg);
-		}
-		.about, .sites-cover {
-			padding: 0.7rem;
-			width: 95%;
-		}
-		.sites-cover, .sites {
-			display: flex;
-			align-items: center;
-		}
-		.sites-cover {
-			gap: 2rem;
-			flex-direction: column;
-			justify-content: center;
-		}
-		.sites {
-			position: relative;
-			width: clamp(280px, 100%, 1000px);
-			padding: 0.5rem;
-			background-color: var(--main-bg);
-			justify-content: space-between;
-			gap: 1rem;
-			transition: all 0.3s ease;
-		}
-		
-		.site-image {
-			width: clamp(100px, 20%, 250px);
-			aspect-ratio: 1 / 1;
-		}
-		.site-info {
-			width: calc(100% - clamp(100px, 20%, 250px));
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-		}
-		.open-cover {
-			margin-top: 1rem;
-			position: relative;
-			width: 100%;
-			display: flex;
-			justify-content: flex-end;
-		}
-		.open-link {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 0.4rem 0.7rem;
-			font-size: 1.2rem;
-			background: linear-gradient(to bottom, #343488 50%, #5555aa 90%);
-			color: var(--gold);
-			border: 1px solid var(--gold);
-			border-bottom: 3px solid var(--gold);
-			box-shadow: 0 0 6px black;
-			overflow: hidden;
-			cursor: pointer;
-		}
-		.open-link:hover {
-			box-shadow: 0 0 6px white;
-			background: linear-gradient(to bottom, #5555aa 20%, #343488 50%);
-		}
-		.open-link:active {
-			transform: scale(0.95);
-		}
-		.sites:nth-of-type(even) {
-			flex-direction: row-reverse;
-		}
-		.sites:nth-of-type(even) .open-cover {
-		    justify-content: flex-start;
-		}
-
-		footer {
-			margin: 0.5rem;
-			margin-top: 2rem;
-			color: var(--text);
-			font-size: 0.9rem;
-		}
-		.card-name, .des {
-			width: 100%;
-			color: var(--text);
-		}
-		.card-name {
-			font-size: 2rem;
-			font-weight: bold;
-		}
-		.des {
-			font-size: 1.2rem;
-		}
-		hr {
-			border: 0;
-			height: 1px;
-			background: var(--gold);
-			margin: 0.8rem 0;
-		}
-
-		@keyframes arrow {
-			0%, 100% {
-				transform: translate(0, 0);
-			}
-			50% {
-				transform: translate(2rem, -2rem);
-			}
-		}
-		@property --angle {
-			syntax: "<angle>";
-			inherits: false;
-			initial-value: 0deg;
-		}
-		.border-ani {
-			position: relative;
-		}
-		.border-ani::before {
-			content: "";
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: calc(100% + 6px);
-			height: calc(100% + 6px);
-			transform: translate(-50%, -50%);
-			background: conic-gradient(from var(--angle) at 50% 50%, var(--gold) 0deg 5deg, transparent 30deg 150deg, var(--gold) 175deg 185deg, transparent 210deg 330deg, var(--gold) 355deg 360deg);
-			animation: borderAni 3s linear infinite;
-			z-index: -1;
-		}
-		.border-ani::before {
-			content: "";
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: calc(100% + 6px);
-			height: calc(100% + 6px);
-			transform: translate(-50%, -50%);
-			background: conic-gradient(from var(--angle) at 50% 50%, var(--gold) 0deg 5deg, transparent 30deg 150deg, var(--gold) 175deg 185deg, transparent 210deg 330deg, var(--gold) 355deg 360deg);
-			animation: borderAni 3s linear infinite;
-			filter: blur(8px);
-			z-index: -1;
-		}
-		@keyframes borderAni {
-			from {
-				--angle: 0deg;
-			}
-			to {
-				--angle: 360deg;
-			}
-		}
-		@media(max-width: 380px) {
-			.card-name {
-				font-size: 1.6rem;
-			}
-			.des {
-				font-size: 1rem;
-			}
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body class="light">
 	<header class="">
@@ -262,44 +19,44 @@
 		</button>
 	</header>
 	<main>
-		<section class="about hover-effect border-curve">
+		<section class="about border-curve border-ani">
 			<h2 class="card-name">Browser-Based Games and Web Apps</h2>
 			<hr>
 			<p class="des">
-			    This website showcases browser-based games and web applications developed
+			    <span class="point-arrow">=></span> This website showcases browser-based games and web applications developed
 			    using HTML, CSS, and JavaScript. Each project focuses on clean UI design,
 			    performance, and interactive user experiences that work directly in the browser
 			    without downloads.
 			</p>
 			<p class="des">
-			    The projects below demonstrate practical implementations of game mechanics,
+			    <span class="point-arrow">=></span> The projects below demonstrate practical implementations of game mechanics,
 			    state management, user input handling, and responsive layouts. New features
 			    and projects are added regularly as development continues.
 			</p>
 		</section>
 		<section class="sites-cover">
-			<div class="sites hover-effect border-curve">
+			<div class="sites border-curve border-ani">
 				<img class="site-image" src="assets/placeholder.png" />
 				<div class="site-info">
 					<h2 class="card-name">Dragon Game</h2>
 					<hr>
 					<p class="des">
-						Dragon Game is a browser-based role-playing game where players explore
+						<span class="point-arrow">=></span> Dragon Game is a browser-based role-playing game where players explore
 						fantasy locations such as towns, caves, and dragon lairs.
 					</p>
 					<p class="des">
-						Players fight monsters, earn experience points and gold, and level up
+						<span class="point-arrow">=></span> Players fight monsters, earn experience points and gold, and level up
 						their hero by unlocking new skills. The goal is to become strong enough
 						to defeat the final boss, an evil dragon.
 					</p>
 					<p class="des">
-						The game is built entirely with JavaScript and runs directly in the browser.
+						<span class="point-arrow">=></span> The game is built entirely with JavaScript and runs directly in the browser.
 						Future updates will introduce new heroes, enemies, and gameplay mechanics.
 					</p>
 
 					<div class="open-cover">
-						<button class="open-link border-curve" aria-label="open link">
-							Open
+						<button class="open-link border-curve" aria-label="open link" title="Open link">
+							<span>Open</span>
 							<svg class="arrow" width="28" height="28" viewBox="0 0 28 28" fill="none">
 								<rect width="20" height="4" x="6" y="3" rx="2" fill="var(--gold)"/>
 								<rect width="4" height="20" x="22" y="3" rx="2" fill="var(--gold)"/>
@@ -309,23 +66,23 @@
 					</div>
 				</div>
 			</div>
-			<div class="sites hover-effect border-curve">
+			<div class="sites border-curve border-ani">
 				<img class="site-image" src="assets/placeholder.png"/>
 				<div class="site-info">
 					<h2 class="card-name">Expense Tracker</h2>
 					<hr>
 					<p class="des">
-						Expense Tracker is a web-based application designed to help users manage
+						<span class="point-arrow">=></span> Expense Tracker is a web-based application designed to help users manage
 						their daily expenses by setting a total budget and tracking spending in real time.
 					</p>
 					<p class="des">
-						The application updates the remaining balance instantly and stores data locally
+						<span class="point-arrow">=></span> The application updates the remaining balance instantly and stores data locally
 						so users can continue tracking their expenses even after closing the browser.
 						Additional features and analytics are planned for future updates.
 					</p>
 					<div class="open-cover">
-						<button class="open-link border-curve" aria-label="open link">
-							Open
+						<button class="open-link border-curve" aria-label="open link" title="Open link">
+							<span>Open</span>
 							<svg class="arrow" width="28" height="28" viewBox="0 0 28 28" fill="none">
 								<rect width="20" height="4" x="6" y="3" rx="2" fill="var(--gold)"/>
 								<rect width="4" height="20" x="22" y="3" rx="2" fill="var(--gold)"/>
@@ -343,7 +100,6 @@
 
 	<script>
 		let body = document.querySelector('body');
-		let theme = document.querySelector('.themeButton');
 		let themeIcon = document.querySelector('#theme-icon path');
 		const moon = "M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z";
 		const sun = "M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Zm326-268Z";
@@ -354,7 +110,6 @@
 		    body.classList.toggle('light', !isDark);
 
 		    themeIcon.setAttribute('d', isDark ? sun : moon);
-		    theme.style.color = isDark ? "#ffff00" : "#ffffff";
 		}
 
 		// to get from system
@@ -373,14 +128,14 @@
 			arrows[0].style.animation = "arrow 1s ease";
 			setTimeout(() => {
 				window.open("https://thanusthapasvi.github.io/dragon-game/", "_blank");
-			}, 500)
+			}, 600)
 		});
 		sites[1].addEventListener('click', () => {
 			arrows[1].style.animation = "none";
 			arrows[1].style.animation = "arrow 1s ease";
 			setTimeout(() => {
 				window.open("https://thanusthapasvi.github.io/Expense-Tracker/", "_blank");
-			}, 500)
+			}, 600)
 		});
 	</script>
 </body>
