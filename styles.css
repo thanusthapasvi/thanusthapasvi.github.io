@@ -98,18 +98,22 @@ main {
 	flex-direction: column;
 	justify-content: center;
 }
+.about {
+	background: radial-gradient(circle at 50% 50%, var(--bg-grad-1) 5%, var(--bg-grad-2)),
+		linear-gradient(to right, #9f00ff, #009fff);
+}
 .about, .sites {
 	width: clamp(280px, 100%, 1000px);
 	padding: 1rem;
-	background: radial-gradient(circle at 50% 100%, var(--bg-grad-1) 5%, var(--bg-grad-2)),
-		radial-gradient(circle at 50% 0%, var(--bg-grad-1) 5%, var(--bg-grad-2)),
-		linear-gradient(to right, #009fff 0%, #9f00ff 100%);
 }
 .sites {
 	position: relative;
 	background-color: var(--main-bg);
 	justify-content: space-between;
 	gap: 1rem;
+	background: radial-gradient(circle at 50% 100%, var(--bg-grad-1) 5%, var(--bg-grad-2)),
+		radial-gradient(circle at 50% 0%, var(--bg-grad-1) 5%, var(--bg-grad-2)),
+		linear-gradient(to right, #009fff 0%, #9f00ff 100%);
 	transition: all 0.3s ease;
 }
 

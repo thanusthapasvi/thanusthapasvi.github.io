@@ -124,16 +124,16 @@
 		const sites = document.querySelectorAll(".open-link")
 		const arrows = document.querySelectorAll(".arrow");
 		sites[0].addEventListener('click', () => {
-			arrows[0].style.animation = "none";
 			arrows[0].style.animation = "arrow 1s ease";
 			setTimeout(() => {
+				arrows[0].style.animation = "none";
 				window.open("https://thanusthapasvi.github.io/dragon-game/", "_blank");
 			}, 600)
 		});
 		sites[1].addEventListener('click', () => {
-			arrows[1].style.animation = "none";
 			arrows[1].style.animation = "arrow 1s ease";
 			setTimeout(() => {
+				arrows[1].style.animation = "none";
 				window.open("https://thanusthapasvi.github.io/Expense-Tracker/", "_blank");
 			}, 600)
 		});
