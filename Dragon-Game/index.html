@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Game</title>
+	<link rel="stylesheet" href="./styles.css" />
+	<script async 
+		src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7863022341647653" crossorigin="anonymous">
+	</script>
+</head>
+<body class="position-relative">
+	<header class="padding-5 width100 position-fixed flex flex-align flex-justify shadow-down">
+		<h1 class="text">Dragon Game</h1>
+		<p class="game-info-mark">?
+			<span class="game-info-text info-text">
+				Welcome.<br>
+				=> Defeat the Dragon to win the game!<br>
+				=> Use the buttons to navigate.<br>
+				=> Defeat monsters to gain <span class="xp-icon-text">Xp</span> and <span class="gold-icon-text">Gold</span>.<br>
+				=> Use <span class="gold-icon-text">Gold</span> to buy <span class="health-icon-text">Health</span> & Weapons in the
+				shop.<br>
+				=> the best weapon you have will be used automatically in battle.<br>
+				=> Weapons will automatically combined to upgrade to weapon of next tier (see ? in inventory for more info).<br>
+				Good luck!
+			</span>
+		</p>
+	</header>
+	<div id="loader-overlay">
+		<div class="spinner">
+            <div class='loader-dot'></div>
+            <div class='loader-dot'></div>
+            <div class='loader-dot'></div>
+            <div class='loader-dot'></div>
+        </div>
+		<p>Loading Game...</p>
+	</div>
+	<main class="flex flex-align flex-justify position-fixed">
+		<div class="game flex-justify">
+			<div class="game-window flex flex-align flex-justify flex-column position-relative">
+				<div class="button-bar flex flex-align flex-justify position-fixed">
+					<!-- a bug for nav buttons -->
+					<!-- <button class="bar-buttons top-button1" onclick="goTown()">
+						<img src="assests/ic_back.svg" aria-label="back button" class="button-icons" />
+						Back
+					</button> -->
+					<button class="bar-buttons top-button2" onclick="goShop()">
+						<img src="assests/ic_shop.svg" aria-label="back button" class="button-icons" />
+						Shop
+					</button>
+					<button class="bar-buttons top-button3" onclick="openInventory()">
+						<img src="assests/ic_inventory.svg" aria-label="back button" class="button-icons" />
+						Inventory
+					</button>
+					<button class="bar-buttons top-button4" onclick="openHero()">
+						<img src="assests/ic_hero.svg" aria-label="back button" class="button-icons" />
+						Hero
+					</button>
+				</div>
+				<button class="button main-button" aria-label="Button 1">Enter Shop</button>
+				<div class="nav-layer">
+					<button class="nav-button left-button">Cave</button>
+					<button class="nav-button right-button">Dragon</button>
+				</div>
+				<div class="hero-profile flex-align flex-justify flex-column position-absolute">
+					<p class="hero-name">Dragon Repeller</p>
+					<div class="profile-image-cover flex flex-align flex-justify">
+						<img src="assests/hero.png" aria-label="hero" class="profile-image" />
+					</div>
+					<div class="hero-info flex flex-justify flex-column">
+						<p class="info">Level: <span class="info-main info-level">2</span></p>
+						<p class="info">Current Weapon: <span class="info-main info-weapon">Stick</span></p>
+					</div>
+				</div>
+				<div class="shop-page-box position-absolute">
+					<p class="shop-text position-absolute">Shop</p>
+					<div class="shop-page-box-cover position-absolute">
+						<div class="shop-page-item">
+							<p class="shop-page-item-name">HP Regen</p>
+							<img src="assests/healthRegen.png" aria-label="health" class="shop-page-item-image" />
+							<p class="shop-page-item-price">10</p>
+						</div>
+						<div class="shop-page-item">
+							<p class="shop-page-item-name">Max HP +10</p>
+							<img src="assests/health.png" aria-label="health" class="shop-page-item-image" />
+							<p class="shop-page-item-price">20</p>
+						</div>
+						<div class="shop-page-item">
+							<p class="shop-page-item-name">Dagger</p>
+							<img src="assests/dagger.png" aria-label="dagger" class="shop-page-item-image" />
+							<p class="shop-page-item-price">30</p>
+						</div>
+						<div class="shop-page-item">
+							<p class="shop-page-item-name">Lucky Box</p>
+							<img src="assests/lucky.png" aria-label="lucky crate" class="shop-page-item-image" />
+							<p class="shop-page-item-price">200</p>
+						</div>
+					</div>
+					<div class="ad-box" >Watch ad<br>Get 5 gold</div>
+				</div>
+				<div class="page-box position-absolute flex-align flex-justify">
+					<div class="page-item">
+						<p class="page-item-name">Slime</p>
+						<div class="page-inner">
+						<img src="assests/slime.png" aria-label="monster 1" class="page-item-image" />
+						</div>
+						<p class="page-item-level">Level 2</p>
+					</div>
+					<div class="page-item">
+						<p class="page-item-name">Slime Group</p>
+						<img src="assests/slimeGroup.png" aria-label="monster 2" class="page-item-image" />
+						<p class="page-item-level">level 10</p>
+					</div>
+					<div class="page-item">
+						<p class="page-item-name">Beast</p>
+						<img src="assests/beast1.png" aria-label="monster 3" class="page-item-image" />
+						<p class="page-item-level">Level 50</p>
+					</div>
+				</div>
+				<div class="inventory-box position-absolute flex-column">
+					<p class="inventory-info position-absolute">Inventory</p>
+					<p class="inventory-info-mark">?</p>
+					<p class="inventory-info-text info-text">
+						Weapons will automatically combined to upgrade to weapon of next tier when you acquired certain amount (NOTE:
+						stick can't be upgraded).<br>
+						2 dagger -> 1 hammer<br>
+						3 hammer -> 1 iron sword<br>
+						4 iron sword -> 1 diamond sword<br>
+					</p>
+					<div class="inventory-weapons position-absolute">
+						<div class="weapons">
+							<img src="assests/stick.png" aria-label="stick" class="weapon-image">
+							<p class="weapon-name">Stick</p>
+							<p class="weapon-quanity weapon1-quanity">1</p>
+						</div>
+						<div class="weapons">
+							<img src="assests/dagger.png" aria-label="dagger" class="weapon-image">
+							<p class="weapon-name">Dagger</p>
+							<p class="weapon-quanity weapon2-quanity">0</p>
+						</div>
+						<div class="weapons">
+							<img src="assests/hammer.png" aria-label="hammer" class="weapon-image">
+							<p class="weapon-name">Hammer</p>
+							<p class="weapon-quanity weapon3-quanity">0</p>
+						</div>
+						<div class="weapons">
+							<img src="assests/iron.png" aria-label="iron sword" class="weapon-image">
+							<p class="weapon-name">Iron Sword</p>
+							<p class="weapon-quanity weapon4-quanity">0</p>
+						</div>
+						<div class="weapons">
+							<img src="assests/diamond.png" aria-label="diamond sword" class="weapon-image">
+							<p class="weapon-name">Diamond Sword</p>
+							<p class="weapon-quanity weapon5-quanity">0</p>
+						</div>
+					</div>
+				</div>
+				<!-- Battle Elements -->
+				<img src="assests/hero.png" aria-label="hero" class="hero-image position-absolute" />
+				<div class="monster-container position-absolute">
+					<!-- Skills -->
+					<div class="skill-effect skill0"></div>
+				</div>
+				<img src="assests/beast1.png" aria-label="monster" class="monster-image position-absolute" />
+				<p class="monster-damage position-absolute">0</p>
+				<p class="hero-damage position-absolute">0</p>
+				<div class="monster-battle-stats flex-align flex-column flex-justify position-absolute">
+					<div class="stats-top flex flex-align">
+						<p class="battle-stats"><span class="monsterName">Slime Group</span></p>
+						<p class="battle-stats">lv<span class="monsterLevel">1</span></p>
+					</div>
+					<div class="progress-bar-cover">
+						<p class="monster-hp">45 / 45</p>
+						<div class="monster-progress progress-bar"></div>
+					</div>
+				</div>
+				<div class="hero-battle-stats position-absolute flex-align flex-justify flex-column">
+					<div class="stats-top flex flex-align">
+						<p class="battle-stats"><span class="heroName">Hero</span></p>
+						<p class="battle-stats">lv<span class="heroLevel">1</span></p>
+					</div>
+					<div class="progress-bar-cover">
+						<p class="hero-hp">100 / 100</p>
+						<div class="hero-progress progress-bar"></div>
+					</div>
+				</div>
+				<div class="energy-box position-absolute flex-align flex-justify">
+					<div class="energy-flow-box flex flex-align">
+						<div class="energy-segment"></div>
+						<div class="energy-segment"></div>
+						<div class="energy-segment"></div>
+						<div class="energy-segment"></div>
+						<div class="energy-segment"></div>
+					</div>
+				</div>
+				<div class="hero-skills position-absolute">
+					<div class="skills">
+						<div class="skill-cooldown"></div>
+						<img class="skill-image" src="assests/placeholder.png" aria-label="Skill"/>
+						<p class="skill-cost">1</p>
+					</div>
+					<div class="skills">
+						<div class="skill-cooldown"></div>
+						<img class="skill-image" src="assests/placeholder.png" aria-label="Skill"/>
+						<p class="skill-cost">1</p>
+					</div>
+					<div class="skills">
+						<div class="skill-cooldown"></div>
+						<img class="skill-image" src="assests/placeholder.png" aria-label="Skill"/>
+						<p class="skill-cost">1</p>
+					</div>
+					<div class="skills">
+						<img class="skill-image" src="assests/run.jpeg" aria-label="Skill"/>
+					</div>
+				</div>
+
+				<div class="hero-stats flex flex-align position-fixed">
+					<div class="game-element-icon xp-icon position-relative">
+						<p class="game-element-text xp-info-text info-text">
+							Increase <span class="xp-icon-text">Level</span> by getting <span class="xp-icon-text">xp</span> from
+							monsters to improve your damage
+						</p>
+						<div class="icon-text-bg">
+							<div class="xp-progress-bar progress-bar"></div>
+							<span class="xpText">0</span>
+						</div>
+						<span class="levelText">1</span>
+					</div>
+					<div class="game-element-icon coin-icon position-relative">$
+						<p class="game-element-text gold-info-text info-text">Use <span class="gold-icon-text">Gold</span> to purchase items from
+							shop</p>
+						<div class="icon-text-bg">
+							<span class="goldText">50</span>
+						</div>
+					</div>
+					<div class="game-element-icon health-icon position-relative">+
+						<p class="game-element-text health-info-text info-text">increase Max <span class="health-icon-text">Health</span> to
+							increase HP of character</p>
+						<div class="icon-text-bg">
+							<span class="healthText">100</span>
+						</div>
+					</div>
+				</div>
+				<div class="game-over-cover flex-align flex-justify position-fixed">
+					<div class="game-win-lose flex flex-align flex-column flex-justify">
+						<p class="game-over">&#x1F389 You Won &#x1F389</p>
+						<button class="game-over-ok" onclick="reload()">Replay</button>
+					</div>
+				</div>
+				<p class="dialog position-fixed">Welcome Savior. You have to defeat the dragon. Use the ? above for info.</p>
+			</div>
+		</div>
+		<div class="lucky-box width-height-100 flex-align flex-justify flex-column">
+			<div class="lucky-game soft-border position-relative">
+				<div class="lucky-game-cover width-height-100 soft-border flex flex-align flex-justify flex-column position-absolute">
+					<div class="box position-relative"></div>
+
+					<div class="dot-box flex flex-align flex-justify">
+						<div class="dot"></div>
+						<div class="dot"></div>
+						<div class="dot"></div>
+						<div class="dot"></div>
+					</div>
+					<p class="open-lucky-text">Click to Open</p>
+				</div>
+			</div>
+		</div>
+		<div class="ad-left">
+			<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7863022341647653" data-ad-slot="6458010754"
+				data-ad-format="auto" data-full-width-responsive="true"></ins>
+			<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+		</div>
+		<div class="ad-right">
+			<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7863022341647653" data-ad-slot="6458010754"
+				data-ad-format="auto" data-full-width-responsive="true"></ins>
+			<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+		</div>
+	</main>
+	<div class="result width-height-100">
+		<div class="result-content flex flex-align flex-justify flex-column">
+			<p class="result-text"></p>
+			<button class="ok">OK</button>
+	</div>
+	</div>
+
+	<div class="ad-pop flex-align flex-justify position-fixed">
+		<div class="ad-cover">
+			<button class="closeAd" aria-label="close ad">X</button>
+			<!-- Coin Unit -->
+			<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7863022341647653" data-ad-slot="7541057949"
+				data-ad-format="auto" data-full-width-responsive="true"></ins>
+		</div>
+	</div>
+
+	<audio id="button-sound" src="audio/button-click.mp3"></audio>
+	<audio id="weapon-sound" src="audio/weapon-swing.mp3"></audio>
+	<audio id="teleport-sound" src="audio/teleport.mp3"></audio>
+	<audio id="sword-sound" src="audio/sword-slash.mp3"></audio>
+	<audio id="win-sound" src="audio/win.mp3"></audio>
+	<audio id="lose-sound" src="audio/lose.mp3"></audio>
+	<audio id="buy-success-sound" src="audio/buy-success.mp3"></audio>
+	<audio id="buy-fail-sound" src="audio/buy-fail.mp3"></audio>
+
+	<div class="cursor-dot">
+		<div class="cursor-dot-inner">
+			<div class="cursor-dot-core"></div>
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+
+	<script src="./logic.js"></script>
+</body>
+</html>
