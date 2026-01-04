@@ -1,12 +1,14 @@
 :root {
 	--gold: #ffd900;
+	--point: #ff3434;
 }
-
 .light {
 	--bg: rgb(120, 120, 200);
 	--header-bg: rgb(150, 150, 255);
 	--text: black;
-	--main-bg: rgb(200, 200, 220);
+	--main-bg: rgb(200, 200, 230);
+	--section-bg1: rgb(200, 200, 250);
+	--section-bg2: rgb(250, 200, 250);
 	--text-bg: rgb(230, 230, 230);
 	--theme-icon: #fff;
 	--bg-grad-1: rgba(200, 200, 200, 0.5);
@@ -17,9 +19,11 @@
 	--header-bg: rgb(30, 30, 100);
 	--text: white;
 	--main-bg: rgb(50, 50, 80);
+	--section-bg1: rgb(50, 50, 100);
+	--section-bg2: rgb(100, 50, 100);
 	--text-bg: rgb(10, 10, 10);
 	--theme-icon: #ff0;
-	--bg-grad-1: rgba(25, 25, 25, 0.6);
+	--bg-grad-1: rgba(25, 25, 25, 0.5);
 	--bg-grad-2: rgba(25, 25, 25, 0);
 }
 
@@ -34,7 +38,6 @@ body, html {
 }
 body {
 	position: relative;
-	background: var(--main-bg);
 	overflow-x: hidden;
 	overflow-y: auto;
 }
@@ -57,7 +60,7 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	background-color: var(--main-bg);
+	background-color: var(--header-bg);
 	z-index: 999;
 }
 
@@ -78,29 +81,29 @@ header {
 	transform: scale(0.9);
 }
 
-main {
+main, section, footer {
 	width: 100%;
-	margin-top: 3.5rem;
-	padding: 1rem;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	gap: 2rem;
+	color: var(--text);
 }
-
-.sites-cover, .sites {
-	display: flex;
-	align-items: center;
+main {
+	margin-top: 3.5rem;
 }
-
+section {
+	position: relative;
+	padding: 1rem;
+}
+section:nth-of-type(odd) {
+	background: var(--section-bg1);
+}
+section:nth-of-type(even) {
+	background: var(--section-bg2);
+}
 .sites-cover {
 	gap: 2rem;
 	flex-direction: column;
-	justify-content: center;
-}
-.about {
-	background: radial-gradient(circle at 50% 50%, var(--bg-grad-1) 5%, var(--bg-grad-2)),
-		linear-gradient(to right, #9f00ff, #009fff);
 }
 .about, .sites {
 	width: clamp(280px, 100%, 1000px);
@@ -108,7 +111,8 @@ main {
 }
 .sites {
 	position: relative;
-	background-color: var(--main-bg);
+	display: flex;
+	align-items: center;
 	justify-content: space-between;
 	gap: 1rem;
 	background: radial-gradient(circle at 50% 100%, var(--bg-grad-1) 5%, var(--bg-grad-2)),
@@ -147,16 +151,15 @@ main {
 	border: 2px solid white;
 	overflow: hidden;
 	cursor: pointer;
-
-	& span {
-		transform: translateX(12px);
-		transition: all 0.3s ease;
-		color: white;
-	}
-	& svg {
-		transition: all 0.3s ease;
-		transform: translate(-2rem, 2rem);
-	}
+}
+.open-link span {
+	transform: translateX(12px);
+	transition: all 0.3s ease;
+	color: white;
+}
+.open-link svg {
+	transition: all 0.3s ease;
+	transform: translate(-2rem, 2rem);
 }
 .open-link::after {
 	content: '';
@@ -179,10 +182,13 @@ main {
 }
 
 footer {
-	margin: 1rem;
-	margin-top: 2rem;
-	color: var(--text);
-	font-size: 0.9rem;
+	padding: 1rem;
+	background: var(--header-bg);
+	font-size: 1rem;
+}
+.imp-text, .point-arrow {
+	font-weight: bold;
+	color: var(--point);
 }
 
 .card-name, .des {
@@ -200,12 +206,8 @@ footer {
 hr {
 	border: 0;
 	height: 1px;
-	background: var(--gold);
+	background: var(--point);
 	margin: 0.8rem 0;
-}
-.point-arrow {
-	color: var(--gold);
-	font-weight: bold;
 }
 
 @keyframes arrow {
@@ -233,30 +235,17 @@ hr {
 .border-ani {
 	position: relative;
 }
-.border-ani::before {
+.border-ani::after, .border-ani::before {
 	content: "";
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: calc(100% + 2px);
-	height: calc(100% + 2px);
-	transform: translate(-50%, -50%);
+	inset: -2px;
+	border-radius: inherit;
 	background: linear-gradient(var(--angle), #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
 	animation: borderAni 3s linear infinite;
 	z-index: -1;
 }
 .border-ani::before {
-	content: "";
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: calc(100% + 2px);
-	height: calc(100% + 2px);
-	transform: translate(-50%, -50%);
-	background: linear-gradient(var(--angle), #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-	animation: borderAni 3s linear infinite;
 	filter: blur(4px);
-	z-index: -1;
 }
 @keyframes borderAni {
 	from {
@@ -302,12 +291,12 @@ hr {
 	.open-link:hover {
 		border: 2px solid var(--gold);
 		box-shadow: 0 0 6px 1px var(--gold);
-		& span {
-			transform: translateX(0);
-			color: var(--gold);
-		}
-		& svg {
-			transform: translate(0, 0);
-		}
+	}
+	.open-link:hover span {
+		transform: translateX(0);
+		color: var(--gold);
+	}
+	.open-link:hover svg {
+		transform: translate(0, 0);
 	}
 }
