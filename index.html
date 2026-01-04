@@ -57,7 +57,7 @@
 					</p>
 
 					<div class="open-cover">
-						<button class="open-link border-curve" aria-label="open link" title="Open link">
+						<button class="open-link border-curve" aria-label="open link" title="Open link" data-url="/dragon-game/">
 							<span>Open</span>
 							<svg class="arrow" width="28" height="28" viewBox="0 0 28 28" fill="none">
 								<rect width="20" height="4" x="6" y="3" rx="2" fill="var(--gold)"/>
@@ -83,7 +83,7 @@
 						Additional features and analytics are planned for future updates.
 					</p>
 					<div class="open-cover">
-						<button class="open-link border-curve" aria-label="open link" title="Open link">
+						<button class="open-link border-curve" aria-label="open link" title="Open link" data-url="/expense-tracker/">
 							<span>Open</span>
 							<svg class="arrow" width="28" height="28" viewBox="0 0 28 28" fill="none">
 								<rect width="20" height="4" x="6" y="3" rx="2" fill="var(--gold)"/>
@@ -128,19 +128,17 @@
 
 		const sites = document.querySelectorAll(".open-link")
 		const arrows = document.querySelectorAll(".arrow");
-		sites[0].addEventListener('click', () => {
-			arrows[0].style.animation = "arrow 1s ease";
-			setTimeout(() => {
-				arrows[0].style.animation = "none";
-				window.open("https://thanusthapasvi.github.io/dragon-game/", "_blank");
-			}, 600)
-		});
-		sites[1].addEventListener('click', () => {
-			arrows[1].style.animation = "arrow 1s ease";
-			setTimeout(() => {
-				arrows[1].style.animation = "none";
-				window.open("https://thanusthapasvi.github.io/Expense-Tracker/", "_blank");
-			}, 600)
+
+		sites.forEach((btn, index) => {
+			btn.addEventListener('click', () => {
+				const arrow = arrows[index];
+				arrow.style.animation = "arrow 1s ease";
+
+				setTimeout(() => {
+					arrow.style.animation = "none";
+					window.open(btn.dataset.url, "_blank");
+				}, 600);
+			});
 		});
 	</script>
 </body>
