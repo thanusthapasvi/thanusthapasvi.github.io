@@ -1524,8 +1524,10 @@ main {
 }
 
 .cursor-dot, .cursor-dot-inner, .cursor-dot-core {
+	aspect-ratio: 1 / 1;
 	pointer-events: none;
 	will-change: transform, width, height, background-color;
+	border-radius: 50%;
 }
 .cursor-dot, .cursor-dot-inner {
 	display: flex;
@@ -1537,31 +1539,26 @@ main {
 	top: 0;
 	left: 0;
 	width: 2.5rem;
-	height: 2.5rem;
-	border-radius: 50%;
 	background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.05) 40%);
 	z-index: 9999;
-	transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, transform 0.08s ease-out;
 	opacity: 0;
 	visibility: hidden;
+	transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, transform 0.08s ease-out;
 }
 .cursor-dot-inner, .cursor-dot-core {
-	border-radius: 50%;
 	transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease;
 }
 .cursor-dot-inner {
-	width: 1.2rem;
-	height: 1.2rem;
-	border: 2px solid transparent;
-	border-top: 2px solid var(--accent-2-shadow);
-	border-bottom: 2px solid var(--accent-2-shadow);
+	width: 1.3rem;
+	border: 3px solid transparent;
+	border-top: 3px solid var(--accent-2-shadow);
+	border-bottom: 3px solid var(--accent-2-shadow);
 	box-shadow: 0 0 6px 1px transparent;
 	background-color: transparent;
 	animation: cursor-dot-rotate 3s linear infinite;
 }
 .cursor-dot-core {
-	width: 0.4rem;
-	height: 0.4rem;
+	width: 0.5rem;
 	border: 2px solid var(--gold);
 	background-color: transparent;
 }
@@ -1578,7 +1575,7 @@ main {
 		transform: scale(1);
 	}
 	50% {
-		transform: scale(0.9);
+		transform: scale(0.8);
 	}
 	25%, 75% {
 		transform: scale(1.2);
@@ -1616,22 +1613,18 @@ main {
 	/* If the body HAS a hovered button, change the dot */
 	/* body:has(.button:hover), body:has(.nav-button:hover), body:has(.bar-buttons:hover), body:has(.game-element-icon:hover), body:has(.shop-page-item:hover) */
 	.cursor-hover .cursor-dot {
-		width: 3.8rem;
-		height: 3.8rem;
+		width: 3.5rem;
+		height: 3.5rem;
 		background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08) 40%);
 	}
 	.cursor-hover .cursor-dot-inner {
-		width: 1.5rem;
-		height: 1.5rem;
-		border: 2px solid transparent;
-		border-top: 2px solid var(--accent-text);
-		border-bottom: 2px solid var(--accent-text);
-		box-shadow: 0 0 6px 1px var(--accent-2);
+		width: 1.8rem;
+		border-top: 3px solid var(--accent-text);
+		border-bottom: 3px solid var(--accent-text);
 		animation: cursor-dot-rotate 3s linear infinite;
 	}
 	.cursor-hover .cursor-dot-core {
-		width: 0.6rem;
-		height: 0.6rem;
+		width: 0.8rem;
 		box-shadow: 0 0 6px 1px var(--gold);
 		animation: cursor-dot-pulse 1s linear infinite;
 	}
