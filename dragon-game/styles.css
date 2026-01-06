@@ -1524,16 +1524,15 @@ main {
 }
 .cursor-dot {
 	position: fixed;
-	top: 30px;
-	left: 30px;
+	top: 0;
+	left: 0;
 	width: 2.5rem;
 	height: 2.5rem;
 	border-radius: 50%;
 	background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.05) 40%);
 	pointer-events: none;
-	transform: translate(-50%, -50%);
 	z-index: 9999;
-	transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, top 0.1s ease-out, left 0.1s ease-out;
+	transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, transform 0.1s ease-out;
 	display: none;
 	animation: none;
 }
