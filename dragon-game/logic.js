@@ -66,7 +66,7 @@ world.add(dragonLight2);
 
 // loading world model
 loader.load(
-    "./models/gameWorld.glb",
+    "models/gameWorld.glb",
     (gltf) => {
         const model = gltf.scene;
         model.position.set(0, 0, 0);
@@ -97,7 +97,7 @@ function createTorchFire(torchEmpty) {
     fireLight.position.set(0, 0.5, 0); // EMPTY origin
     torchEmpty.add(fireLight);
 
-    const fireTex = new THREE.TextureLoader().load("./assests/fire.png");
+    const fireTex = new THREE.TextureLoader().load("assests/fire.png");
     const fireMat = new THREE.SpriteMaterial({
         map: fireTex,
         transparent: true
@@ -1453,7 +1453,7 @@ function showAd() {
 // mouse follow effect
 const cursorDot = document.querySelector(".cursor-dot");
 window.addEventListener('mousemove', (e) => {
-    cursorDot.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%)`;
+    cursorDot.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
 });
 const hoverTargets = document.querySelectorAll(
     ".button, .nav-button, .bar-buttons, .game-element-icon, .shop-page-item, .closeAd, .page-item, .skills"

@@ -1522,6 +1522,16 @@ main {
 		grid-template-columns: repeat(2, auto);
 	}
 }
+
+.cursor-dot, .cursor-dot-inner, .cursor-dot-core {
+	pointer-events: none;
+	will-change: transform, width, height, background-color;
+}
+.cursor-dot, .cursor-dot-inner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 .cursor-dot {
 	position: fixed;
 	top: 0;
@@ -1530,54 +1540,48 @@ main {
 	height: 2.5rem;
 	border-radius: 50%;
 	background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.05) 40%);
-	pointer-events: none;
 	z-index: 9999;
-	transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, transform 0.1s ease-out;
-	display: none;
-	animation: none;
+	transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, transform 0.08s ease-out;
+	opacity: 0;
+	visibility: hidden;
+}
+.cursor-dot-inner, .cursor-dot-core {
+	border-radius: 50%;
+	transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease;
 }
 .cursor-dot-inner {
-	position: absolute;
 	width: 1.2rem;
 	height: 1.2rem;
-	border-radius: 50%;
 	border: 2px solid transparent;
 	border-top: 2px solid var(--accent-2-shadow);
 	border-bottom: 2px solid var(--accent-2-shadow);
 	box-shadow: 0 0 6px 1px transparent;
 	background-color: transparent;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 	animation: cursor-dot-rotate 3s linear infinite;
-	transition: all 0.3s ease;
 }
 .cursor-dot-core {
-	position: absolute;
 	width: 0.4rem;
 	height: 0.4rem;
-	border-radius: 50%;
 	border: 2px solid var(--gold);
 	background-color: transparent;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	transition: all 0.3s ease;
 }
 @keyframes cursor-dot-rotate {
 	from {
-		transform: translate(-50%, -50%) rotate(0deg);
+		transform: rotate(0deg);
 	}
 	to {
-		transform: translate(-50%, -50%) rotate(360deg);
+		transform: rotate(360deg);
 	}
 }
 @keyframes cursor-dot-pulse {
-	0%, 50%, 100% {
-		transform: translate(-50%, -50%) scale(1);
+	0%, 100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(0.9);
 	}
 	25%, 75% {
-		transform: translate(-50%, -50%) scale(1.1);
+		transform: scale(1.2);
 	}
 }
 @media(hover: hover) and (pointer: fine) {
@@ -1606,7 +1610,8 @@ main {
 	}
 
 	.cursor-dot {
-		display: block;
+		visibility: visible;
+		opacity: 1;
 	}
 	/* If the body HAS a hovered button, change the dot */
 	/* body:has(.button:hover), body:has(.nav-button:hover), body:has(.bar-buttons:hover), body:has(.game-element-icon:hover), body:has(.shop-page-item:hover) */
@@ -1614,9 +1619,7 @@ main {
 		width: 3.8rem;
 		height: 3.8rem;
 		background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08) 40%);
-		animation: cursor-dot-pulse 1.5s ease infinite;
 	}
-	
 	.cursor-hover .cursor-dot-inner {
 		width: 1.5rem;
 		height: 1.5rem;
@@ -1624,11 +1627,12 @@ main {
 		border-top: 2px solid var(--accent-text);
 		border-bottom: 2px solid var(--accent-text);
 		box-shadow: 0 0 6px 1px var(--accent-2);
+		animation: cursor-dot-rotate 3s linear infinite;
 	}
-	
 	.cursor-hover .cursor-dot-core {
 		width: 0.6rem;
 		height: 0.6rem;
 		box-shadow: 0 0 6px 1px var(--gold);
+		animation: cursor-dot-pulse 1s linear infinite;
 	}
 }
