@@ -263,9 +263,6 @@ hr {
 	}
 }
 @media(max-width: 500px) {
-	main {
-		padding: 1.2rem;
-	}
 	.about, .sites {
 		padding: 0.5rem;
 	}
