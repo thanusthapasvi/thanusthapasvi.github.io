@@ -378,7 +378,7 @@ function resetToDefaults() {
     gold = 50;
     xp = 0;
     level = 1;
-    maxHealth = 100;
+    maxHealth = 100000;
     health = 100;
     currentWeapon = 0;
     currentHero = 0;
@@ -467,6 +467,9 @@ const heroBattleSkills = document.querySelector(".hero-skills");
 const monsterStats = document.querySelector(".monster-battle-stats");
 const monsterName = document.querySelector(".monsterName");
 const monsterLevel = document.querySelector(".monsterLevel");
+
+const dragonStats = document.querySelector(".dragon-battle-stats");
+const dragonLevel = document.querySelector(".dragonLevel");
 
 const monsterDamageText = document.querySelector(".monster-damage");
 const heroDamageText = document.querySelector(".hero-damage");
@@ -642,6 +645,7 @@ function skillButtons() {
 skillButtons();
 let isPageOpen = false;
 function update(location) {
+    dragonStats.style.display = "none";
     monsterStats.style.display = "none";
     heroBattleStats.style.display = "none";
     heroBattleSkills.style.display = "none";
@@ -1062,27 +1066,86 @@ function skillEnergyCooldown() {
 
 function goFight() {
     update(locations[2]);
-
-    monsterHealth = monsters[fighting].health;
-
-    monsterName.innerText = monsters[fighting].name;
-    monsterLevel.innerText = monsters[fighting].level;
-
-    heroBattleName.innerText = heros[currentHero].name;
-    heroBattleLevel.innerText = level;
-
-    monsterStats.style.display = "flex";
+    
     heroBattleStats.style.display = "flex";
     heroBattleSkills.style.display = "grid";
     heroImage.style.display = "block";
     energyBox.style.display = "flex";
     monsterContainer.style.display = "block";
 
+    monsterHealth = monsters[fighting].health;
+
+    heroBattleName.innerText = heros[currentHero].name;
+    heroBattleLevel.innerText = level;
+
+    if(fighting === 3) {
+        dragonStats.style.display = "flex";
+        dragonLevel.innerText = monsters[fighting].level;
+        dragonProgress(monsterHealth);
+    } else {
+        monsterStats.style.display = "flex";
+        monsterName.innerText = monsters[fighting].name;
+        monsterLevel.innerText = monsters[fighting].level;
+        monsterProgress(monsterHealth);
+    }
+
     initCameraForContainer(monsterCamera, monsterContainer);
     loadMonsterModel(monsters[fighting].name);
 
-    monsterProgress(monsterHealth);
     playerProgress(health);
+}
+let previousLayer = null;
+function dragonProgress(currentHP) {
+    const dragon = monsters[fighting];
+
+    const totalHP = dragon.health;
+    const totalLayers = dragon.level / 2;
+    const hpPerLayer = totalHP / totalLayers;
+
+    const currentLayer = Math.ceil(currentHP / hpPerLayer);
+    const hpInLayer = currentHP % hpPerLayer || hpPerLayer;
+    const percent = (hpInLayer / hpPerLayer) * 100;
+
+    const bar = document.querySelector(".dragon-health-bar");
+    const finalBar = document.querySelector(".dragon-health-bar-final");
+    const layerText = document.querySelector(".dragon-health-bar-count");
+
+    layerText.innerText = Math.max(currentLayer, 0);
+
+    if (currentHP <= 0) {
+        bar.style.width = "0%";
+        finalBar.style.width = "0%";
+        previousLayer = null;
+        return;
+    }
+
+    if (previousLayer === null) {
+        previousLayer = currentLayer;
+    }
+
+    if (currentLayer < previousLayer) {
+        bar.style.transition = "width 0.2s linear";
+        bar.style.width = "0%";
+        setTimeout(() => {
+            bar.style.transition = "none";
+            bar.style.width = "100%";
+            requestAnimationFrame(() => {
+                bar.style.transition = "width 0.3s ease-out";
+                bar.style.width = `${percent}%`;
+            });
+        }, 200);
+    } 
+    else {
+        bar.style.transition = "width 0.25s linear";
+        bar.style.width = `${percent}%`;
+    }
+    if (currentLayer > 1) {
+        finalBar.style.width = "100%";
+    } else {
+        finalBar.style.width = `${percent}%`;
+        bar.style.width = "0%";
+    }
+    previousLayer = currentLayer;
 }
 
 function monsterProgress(hp) {
@@ -1151,7 +1214,11 @@ function attack(skill) {
         dialog.innerText += " You miss.";
     }
     playerProgress(health);
-    monsterProgress(monsterHealth);
+    if(fighting == 3)
+        dragonProgress(monsterHealth);
+    else
+        monsterProgress(monsterHealth);
+
     if (health <= 0) {
         setTimeout(() => {
             lose();

@@ -525,13 +525,67 @@ main {
 	gap: 4.5rem;
 	background-color: transparent;
 }
-.monster-battle-stats, .hero-battle-stats {
+.monster-battle-stats, .hero-battle-stats, .dragon-battle-stats {
 	height: 4rem;
-	width: clamp(200px, 30%, 320px);
-	background-color: var(--accent-text);
 	border-radius: 8px;
 	padding: 0.5rem;
 	gap: 0.5rem;
+	display: none;
+}
+/* Dragon stats*/
+.dragon-battle-stats {
+	width: clamp(280px, 100%, 480px);
+	top: 3rem;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: rgba(0, 0, 0, 0.5);
+}
+.dragon-stats-top {
+	width: 100%;
+	padding: 0.2rem;
+}
+.dragonName {
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	color: crimson;
+}
+.dragon-stats-bottom {
+	width: 100%;
+}
+.dragon-health-bars {
+	width: 93%;
+	height: 1.5rem;
+	border-radius: 4px;
+	border: 1px solid black;
+	overflow: hidden;
+}
+.dragon-health-bar, .dragon-health-bar-final {
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(to right, #ff1212, var(--gold));
+	transition: width 0.3s ease;
+}
+.dragon-health-bar-final {
+	z-index: 1;
+}
+.dragon-health-bar {
+	z-index: 2;
+}
+.dragon-health-bar-count {
+	width: 1.5rem;
+	aspect-ratio: 1 / 1;
+	top: 0;
+	right: 0;
+	padding-top: 0.15rem;
+	color: white;
+	font-style: italic;
+	z-index: 3;
+}
+/* hero and monster stats */
+.monster-battle-stats, .hero-battle-stats {
+	width: clamp(200px, 30%, 320px);
+	background-color: var(--accent-text);
 	display: none;
 }
 .monster-battle-stats {
@@ -547,11 +601,11 @@ main {
 	justify-content: space-between;
 	gap: 0.5rem;
 }
-.battle-stats {
+.battle-stats, .dragon-stats {
 	color: white;
 	font-size: 0.6rem;
 }
-.monsterName, .monsterLevel, .heroName , .heroLevel {
+.monsterName, .monsterLevel, .heroName , .heroLevel, .dragonName, .dragonLevel {
 	font-size: 1rem;
 }
 .monster-hp, .hero-hp {
