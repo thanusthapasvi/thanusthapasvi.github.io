@@ -378,7 +378,7 @@ function resetToDefaults() {
     gold = 50;
     xp = 0;
     level = 1;
-    maxHealth = 100000;
+    maxHealth = 100;
     health = 100;
     currentWeapon = 0;
     currentHero = 0;
@@ -730,6 +730,7 @@ function closeNavButton() {
 }
 
 function goTown() {
+    stopMonsterCombat();
     update(locations[0]);
     targetRotation = 0;
     navigate()
@@ -1053,7 +1054,7 @@ function energyPulseAnimation() {
 
     const segment = energySegments[segmentIndex];
     segment.style.animation = "none";
-    segment.offsetHeight; // force reflow
+    segment.offsetHeight;
     segment.style.animation = "energyPulse 0.4s ease-in-out";
 }
 function skillEnergyCooldown() {
@@ -1088,6 +1089,7 @@ function goFight() {
         monsterLevel.innerText = monsters[fighting].level;
         monsterProgress(monsterHealth);
     }
+    startMonsterCombat()
 
     initCameraForContainer(monsterCamera, monsterContainer);
     loadMonsterModel(monsters[fighting].name);
@@ -1184,52 +1186,41 @@ function healthBarColor(name, percent) {
 function attack(skill) {
     skill = Number(skill);
     console.log(typeof skill);
-    if (isMonsterHit()) {
-        if(energy >= heroSkills[skill].energyCost) {
-            dialog.innerText = "The " + monsters[fighting].name + " attacks. ";
-            dialog.innerText += " You used your skill " + heroSkills[skill].name + ". ";
 
-            const skillAttack = document.querySelector("." + heroSkills[skill].skillClass);
-            if(skillAttack != null) {
-                skillAttack.style.display = "block";
-                setTimeout(() => {
-                    skillAttack.style.display = "none";
-                }, 700);
-            }
-            let monsterhitAmount = weapons[currentWeapon].power + Math.floor(Math.random() * (heroSkills[skill].power / 100 * heros[currentHero].attackPower)) + level;
-            useEnergy(heroSkills[skill].energyCost);
+    if (energy >= heroSkills[skill].energyCost) {
+        dialog.innerText += " You used " + heroSkills[skill].name + ". ";
 
-            monsterHealth -= monsterhitAmount;
-            monsterDamageText.style.display = "block";
-            monsterDamageText.innerText = monsterhitAmount;
-
-            let heroHitAmount = getMonsterAttackValue(monsters[fighting].level);
-            health -= heroHitAmount;
-            heroDamageText.style.display = "block";
-            heroDamageText.innerText = heroHitAmount;
-        } else {
-            dialog.innerText += "Insufficent Energy.";
+        const skillAttack = document.querySelector("." + heroSkills[skill].skillClass);
+        if (skillAttack != null) {
+            skillAttack.style.display = "block";
+            setTimeout(() => {
+                skillAttack.style.display = "none";
+            }, 700);
         }
+        useEnergy(heroSkills[skill].energyCost);
+        let monsterhitAmount = weapons[currentWeapon].power + Math.floor(Math.random() * (heroSkills[skill].power / 100 * heros[currentHero].attackPower)) + level;
+        monsterHealth -= monsterhitAmount;
+        monsterDamageText.style.display = "block";
+        monsterDamageText.innerText = monsterhitAmount;
+        setTimeout(() => {
+            monsterDamageText.style.display = "none";
+        }, 500);
     } else {
-        dialog.innerText += " You miss.";
+        dialog.innerText += "Insufficent Energy.";
     }
-    playerProgress(health);
     if(fighting == 3)
         dragonProgress(monsterHealth);
     else
         monsterProgress(monsterHealth);
 
-    if (health <= 0) {
-        setTimeout(() => {
-            lose();
-        }, 500);
-    } else if (monsterHealth <= 0) {
+    if (monsterHealth <= 0) {
         if (fighting === 3) {
             setTimeout(() => {
                 winGame();
             }, 500);
         } else {
             setTimeout(() => {
+                stopMonsterCombat();
                 defeatMonster();
             }, 1000);
         }
@@ -1239,18 +1230,65 @@ function attack(skill) {
     } else {
         playSwordAudio();
     }
+}
+
+let monsterEnergy = 0;
+let monsterEnergyTimer = null;
+let fightingActive = false;
+function startMonsterCombat() {
+    if (fightingActive) return;
+
+    fightingActive = true;
+    monsterEnergy = 0;
+
+    monsterEnergyTimer = setInterval(() => {
+        monsterEnergy += 1;
+        if (monsterEnergy >= 2) {
+            if(Math.random() > 0.2) {
+                monsterAttack(2);
+                monsterEnergy -= 2;
+            }
+        }
+        if (monsterEnergy === 1) {
+            if(Math.random() > 0.5) {
+                monsterAttack(1);
+                monsterEnergy -= 1;
+            }
+        }
+    }, 2500);
+}
+function monsterAttack(energyUsed) {
+    if(!fightingActive) return;
+
+    let heroHitAmount;
+    dialog.innerText = "The " + monsters[fighting].name + " attacks! ";
+
+    if(energyUsed === 2) {
+        heroHitAmount = Math.floor(1.3 * getMonsterAttackValue(monsters[fighting].level));
+    } else {
+        heroHitAmount = getMonsterAttackValue(monsters[fighting].level);
+    }
+    health -= heroHitAmount;
+    heroDamageText.style.display = "block";
+    heroDamageText.innerText = heroHitAmount;
     setTimeout(() => {
         heroDamageText.style.display = "none";
-        monsterDamageText.style.display = "none";
     }, 500);
+    playerProgress(health);
+    
+    if (health <= 0) {
+        stopMonsterCombat();
+        setTimeout(() => lose(), 500);
+    }
+}
+function stopMonsterCombat() {
+    fightingActive = false;
+    clearInterval(monsterEnergyTimer);
+    monsterEnergyTimer = null;
 }
 function getMonsterAttackValue(level) {
     const hit = Math.floor(Math.abs((level * 3) - (Math.floor(Math.random() * (level * 10)) / 10)));
     return hit > 0 ? hit : 0;
-}
-
-function isMonsterHit() {
-    return Math.random() > .05;
 }
 
 function defeatMonster() {
