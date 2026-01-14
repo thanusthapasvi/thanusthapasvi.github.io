@@ -232,31 +232,6 @@ hr {
 	initial-value: 0deg;
 }
 
-.border-ani {
-	position: relative;
-}
-.border-ani::after, .border-ani::before {
-	content: "";
-	position: absolute;
-	inset: -2px;
-	border-radius: inherit;
-	background: linear-gradient(var(--angle), #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-	animation: borderAni 3s linear infinite;
-	z-index: -1;
-}
-.border-ani::before {
-	filter: blur(4px);
-}
-@keyframes borderAni {
-	from {
-		--angle: 0deg;
-	}
-	to {
-		--angle: 360deg;
-	}
-}
-
-
 @media(max-width: 600px) {
 	.about, .sites {
 		padding: 0.7rem;

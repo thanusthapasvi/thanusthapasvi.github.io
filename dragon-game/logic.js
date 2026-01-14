@@ -7,6 +7,7 @@ const giftContainer = document.querySelector(".box");
 
 /* Monster Box */
 const monsterContainer = document.querySelector(".monster-container");
+const heroContainer = document.querySelector(".hero-container");
 
 /* 3D setup */
 const loader = new THREE.GLTFLoader();
@@ -534,7 +535,8 @@ const heroSkills = [
         energyCost: 20,
         power: 15,
         skillClass: "skill0",
-        imgSrc: "assests/skill0.png"
+        imgSrc: "assests/skill0.png",
+        duration: 0
     },
     {
         skillId: 1,
@@ -542,7 +544,8 @@ const heroSkills = [
         energyCost: 40,
         power: 50,
         skillClass: "skill1",
-        imgSrc: "assests/skill1.png"
+        imgSrc: "assests/skill1.png",
+        duration: 0
     },
     {
         skillId: 2,
@@ -550,7 +553,8 @@ const heroSkills = [
         energyCost: 40,
         power: 0,
         skillClass: "skill2",
-        imgSrc: "assests/skill2.png"
+        imgSrc: "assests/skill2.png",
+        duration: 3
     }
 ]
 const heros = [
@@ -654,6 +658,7 @@ function update(location) {
     heroImage.style.display = "none";
     monsterImage.style.display = "none";
     monsterContainer.style.display = "none";
+    heroContainer.style.display = "none";
     heroDamageText.style.display = "none";
     monsterDamageText.style.display = "none";
     dialog.style.display = "block";
@@ -1073,7 +1078,8 @@ function goFight() {
     heroBattleSkills.style.display = "grid";
     heroImage.style.display = "block";
     energyBox.style.display = "flex";
-    monsterContainer.style.display = "block";
+    monsterContainer.style.display = "flex";
+    heroContainer.style.display = "flex";
 
     monsterHealth = monsters[fighting].health;
 
@@ -1192,11 +1198,12 @@ function attack(skill) {
         dialog.innerText += " You used " + heroSkills[skill].name + ". ";
 
         const skillAttack = document.querySelector("." + heroSkills[skill].skillClass);
+        const skillDuration = Math.max(heroSkills[skill].duration * 1000, 700);
         if (skillAttack != null) {
             skillAttack.style.display = "block";
             setTimeout(() => {
                 skillAttack.style.display = "none";
-            }, 700);
+            }, skillDuration);
         }
         useEnergy(heroSkills[skill].energyCost);
         let monsterhitAmount = null;
@@ -1279,10 +1286,10 @@ function monsterAttack(energyUsed) {
         heroHitAmount = getMonsterAttackValue(monsters[fighting].level);
     }
     if(isShieldActive) {
-        dialog.innerText += "Attack is blocked by shield! ";
+        dialog.innerText += " Attack is blocked by shield! ";
         if(energyUsed === 2) {
             isShieldActive = false;
-            dialog.innerText += "Shield is broken by " + monsters[fighting].name + " ! ";
+            dialog.innerText += " Shield is broken by " + monsters[fighting].name + " ! ";
         }
         return;
     } else {
