@@ -546,9 +546,9 @@ const heroSkills = [
     },
     {
         skillId: 2,
-        name: "Multi Cut",
+        name: "sword shield",
         energyCost: 40,
-        power: 40,
+        power: 0,
         skillClass: "skill2",
         imgSrc: "assests/skill2.png"
     }
@@ -1065,6 +1065,7 @@ function skillEnergyCooldown() {
     }
 }
 
+let isShieldActive;
 function goFight() {
     update(locations[2]);
     
@@ -1198,7 +1199,16 @@ function attack(skill) {
             }, 700);
         }
         useEnergy(heroSkills[skill].energyCost);
-        let monsterhitAmount = weapons[currentWeapon].power + Math.floor(Math.random() * (heroSkills[skill].power / 100 * heros[currentHero].attackPower)) + level;
+        let monsterhitAmount = null;
+        if(heroSkills[skill].power != 0) {
+            monsterhitAmount = weapons[currentWeapon].power + Math.floor(Math.random() * (heroSkills[skill].power / 100 * heros[currentHero].attackPower)) + level;
+        } else {
+            monsterhitAmount = 0;
+            isShieldActive = true;
+            setTimeout(() => {
+                isShieldActive = false
+            }, 3000);
+        }
         monsterHealth -= monsterhitAmount;
         monsterDamageText.style.display = "block";
         monsterDamageText.innerText = monsterhitAmount;
@@ -1268,12 +1278,21 @@ function monsterAttack(energyUsed) {
     } else {
         heroHitAmount = getMonsterAttackValue(monsters[fighting].level);
     }
-    health -= heroHitAmount;
-    heroDamageText.style.display = "block";
-    heroDamageText.innerText = heroHitAmount;
-    setTimeout(() => {
-        heroDamageText.style.display = "none";
-    }, 500);
+    if(isShieldActive) {
+        dialog.innerText += "Attack is blocked by shield! ";
+        if(energyUsed === 2) {
+            isShieldActive = false;
+            dialog.innerText += "Shield is broken by " + monsters[fighting].name + " ! ";
+        }
+        return;
+    } else {
+        health -= heroHitAmount;
+        heroDamageText.style.display = "block";
+        heroDamageText.innerText = heroHitAmount;
+        setTimeout(() => {
+            heroDamageText.style.display = "none";
+        }, 500);
+    }
     playerProgress(health);
     
     if (health <= 0) {

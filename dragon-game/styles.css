@@ -1534,21 +1534,6 @@ main {
 	transform: scale(0.8);
 }
 
-.ad-left, .ad-right {
-	position: absolute;
-	top: 50%;
-	width: 150px;
-	height: 600px;
-	background-color: var(--ad-bg);
-	transform: translateY(-50%);
-	display: block;
-}
-.ad-left {
-	left: 1rem;
-}
-.ad-right {
-	right: 1rem;
-}
 @keyframes adBounce {
 	0%, 100% {
 		transform: translateX(-50%) rotateZ(5deg) scale(1);
@@ -1558,11 +1543,6 @@ main {
 	}
 	50% {
 		transform: translateX(-50%) rotateZ(-5deg) scale(0.9);
-	}
-}
-@media(max-width: 1300px) {
-	.ad-left, .ad-right {
-		display: none;
 	}
 }
 @media(max-width: 650px) {
