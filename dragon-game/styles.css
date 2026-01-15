@@ -1356,6 +1356,52 @@ main {
 		transform: rotate(45deg) translateX(150px) scaleX(0.5);
 	}
 }
+.skill1 {
+	width: 250px;
+	aspect-ratio: 1 / 1;
+	position: absolute;
+	overflow: hidden;
+	display: none;
+}
+.skill1-inner {
+	position: absolute;
+	width: 50px;
+	height: 100px;
+	background: radial-gradient(white, #45ffff 80%);
+	clip-path: path("M 25 0 C 25 10 25 40 50 50 C 25 60 25 90 25 100 C 25 90 25 60 0 50 C 25 40 25 10 25 0 Z");
+	animation: energySlash 1s ease;
+}
+.skill1-inner:nth-of-type(1) {
+	top: 2rem;
+	left: 1rem;
+}
+.skill1-inner:nth-of-type(2) {
+	top: 2rem;
+	right: 1rem;
+	animation-delay: 0.1s;
+}
+.skill1-inner:nth-of-type(3) {
+	top: 6rem;
+	left: calc(50% - 25px);
+	animation-delay: 0.2s;
+}
+@keyframes energySlash {
+	0% {
+		transform: scale3d(0, 0, 1.0);
+	}
+	25% {
+		transform: scale3d(1.0, 1.0, 1.0);
+	}
+	50% {
+		transform: scale3d(1.2, 1.5, 1.0);
+	}
+	75% {
+		transform: scale3d(0.8, 0.5, 1.0);
+	}
+	100% {
+		transform: scale3d(3.0, 5.0, 1.0);
+	}
+}
 .skill2 {
 	margin-top: 2rem;
 	width: 250px;

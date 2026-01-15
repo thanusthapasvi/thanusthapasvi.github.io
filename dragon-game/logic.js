@@ -536,7 +536,8 @@ const heroSkills = [
         power: 15,
         skillClass: "skill0",
         imgSrc: "assests/skill0.png",
-        duration: 0
+        duration: 0.6,
+        specialEffect: "none"
     },
     {
         skillId: 1,
@@ -545,7 +546,8 @@ const heroSkills = [
         power: 50,
         skillClass: "skill1",
         imgSrc: "assests/skill1.png",
-        duration: 0
+        duration: 1,
+        specialEffect: "none"
     },
     {
         skillId: 2,
@@ -554,7 +556,8 @@ const heroSkills = [
         power: 0,
         skillClass: "skill2",
         imgSrc: "assests/skill2.png",
-        duration: 3
+        duration: 3,
+        specialEffect: "shield"
     }
 ]
 const heros = [
@@ -1210,18 +1213,22 @@ function attack(skill) {
         if(heroSkills[skill].power != 0) {
             monsterhitAmount = weapons[currentWeapon].power + Math.floor(Math.random() * (heroSkills[skill].power / 100 * heros[currentHero].attackPower)) + level;
         } else {
-            monsterhitAmount = 0;
-            isShieldActive = true;
-            setTimeout(() => {
-                isShieldActive = false
-            }, 3000);
+            if(heroSkills[skill].specialEffect === "shield") {
+                monsterhitAmount = 0;
+                isShieldActive = true;
+                setTimeout(() => {
+                    isShieldActive = false
+                }, 3000);
+            }
         }
         monsterHealth -= monsterhitAmount;
-        monsterDamageText.style.display = "block";
         monsterDamageText.innerText = monsterhitAmount;
         setTimeout(() => {
-            monsterDamageText.style.display = "none";
-        }, 500);
+            monsterDamageText.style.display = "block";
+            setTimeout(() => {
+                monsterDamageText.style.display = "none";
+            }, 500);
+        }, skillDuration / 2);
     } else {
         dialog.innerText += "Insufficent Energy.";
     }
