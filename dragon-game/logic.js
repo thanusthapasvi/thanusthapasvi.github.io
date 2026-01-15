@@ -1213,13 +1213,25 @@ function attack(skill) {
         if(heroSkills[skill].power != 0) {
             monsterhitAmount = weapons[currentWeapon].power + Math.floor(Math.random() * (heroSkills[skill].power / 100 * heros[currentHero].attackPower)) + level;
         } else {
+            const effectIcon = document.querySelector(`.${heroSkills[skill].specialEffect}-effect-icon`);
+            const effectCooldown = document.querySelector(`.${heroSkills[skill].specialEffect}-effect-duration`);
             if(heroSkills[skill].specialEffect === "shield") {
                 monsterhitAmount = 0;
                 isShieldActive = true;
                 setTimeout(() => {
-                    isShieldActive = false
-                }, 3000);
+                    isShieldActive = false;
+                }, skillDuration);
             }
+            effectIcon.style.display = "block";
+            let effectDuraionTime = 0;
+            const effectDuraion = setInterval(() => {
+                effectCooldown.style.background = `conic-gradient(from 0deg at 50% 50%, transparent ${effectDuraionTime*(10000/skillDuration)}%, rgba(0, 0, 0, 0.5) ${effectDuraionTime*(10000/skillDuration)}%)`;
+                effectDuraionTime++;
+                if(effectDuraionTime === skillDuration / 100) {
+                    clearInterval(effectDuraion);
+                    effectIcon.style.display = "none";
+                }
+            }, 100);
         }
         monsterHealth -= monsterhitAmount;
         monsterDamageText.innerText = monsterhitAmount;
