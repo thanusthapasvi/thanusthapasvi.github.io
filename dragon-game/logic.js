@@ -98,7 +98,7 @@ function createTorchFire(torchEmpty) {
     fireLight.position.set(0, 0.5, 0); // EMPTY origin
     torchEmpty.add(fireLight);
 
-    const fireTex = new THREE.TextureLoader().load("assests/fire.png");
+    const fireTex = new THREE.TextureLoader().load("assets/fire.png");
     const fireMat = new THREE.SpriteMaterial({
         map: fireTex,
         transparent: true
@@ -492,40 +492,59 @@ textUpdates();
 
 const monsters = [
     {
+        name: "dragon",
+        level: 50,
+        health: 800,
+        image: "assets/dragon.png",
+        scaleX: 0.8,
+        scaleY: 0.6,
+        scaleZ: 0.75,
+        fightFunction: fightDragon,
+        specialEffect: "none"
+    },
+    {
         name: "slime",
         level: 3,
         health: 100,
-        image: "assests/slime.png",
+        image: "assets/slime.png",
         scaleX: 0.7,
         scaleY: 0.5,
-        scaleZ: 0.5
+        scaleZ: 0.5,
+        fightFunction: fightSlime,
+        specialEffect: "none"
     },
     {
         name: "slime group",
         level: 10,
         health: 300,
-        image: "assests/slimeGroup.png",
+        image: "assets/slimeGroup.png",
         scaleX: 0.4,
         scaleY: 0.4,
-        scaleZ: 0.2
+        scaleZ: 0.2,
+        fightFunction: fightSlimeGroup,
+        specialEffect: "none"
     },
     {
         name: "beast",
         level: 15,
         health: 450,
-        image: "assests/beast1.png",
+        image: "assets/beast1.png",
         scaleX: 0.8,
         scaleY: 0.6,
-        scaleZ: 0.75
+        scaleZ: 0.75,
+        fightFunction: fightBeast,
+        specialEffect: "none"
     },
     {
-        name: "dragon",
-        level: 50,
-        health: 800,
-        image: "assests/dragon.png",
+        name: "Evil Pheonix",
+        level: 10,
+        health: 250,
+        image: "assets/evilPheonix.png",
         scaleX: 0.8,
         scaleY: 0.6,
-        scaleZ: 0.75
+        scaleZ: 0.75,
+        fightFunction: fightPheonix,
+        specialEffect: "rebirth"
     }
 ]
 const heroSkills = [
@@ -535,7 +554,7 @@ const heroSkills = [
         energyCost: 20,
         power: 15,
         skillClass: "skill0",
-        imgSrc: "assests/skill0.png",
+        imgSrc: "assets/skill0.png",
         duration: 0.6,
         specialEffect: "none"
     },
@@ -545,7 +564,7 @@ const heroSkills = [
         energyCost: 40,
         power: 50,
         skillClass: "skill1",
-        imgSrc: "assests/skill1.png",
+        imgSrc: "assets/skill1.png",
         duration: 1,
         specialEffect: "none"
     },
@@ -555,7 +574,7 @@ const heroSkills = [
         energyCost: 40,
         power: 0,
         skillClass: "skill2",
-        imgSrc: "assests/skill2.png",
+        imgSrc: "assets/skill2.png",
         duration: 3,
         specialEffect: "shield"
     }
@@ -573,37 +592,37 @@ const locations = [
     {
         name: "Hero",
         text: "You are in the town. You see a sign that says \"Shop\".",
-        bg: "url('assests/town.jpg')",
+        bg: "url('assets/town.jpg')",
         rotation: 0
     },
     {
         name: "cave",
         text: "You enter the cave. You see some monsters.",
-        bg: "url('assests/cave.png')",
+        bg: "url('assets/cave.png')",
         rotation: -120
     },
     {
         name: "fight",
         text: "You are fighting a monster.",
-        bg: "url('assests/battle.jpg')",
+        bg: "url('assets/battle.jpg')",
         rotation: -120
     },
     {
         name: "kill monster",
         text: 'The monster screams "Arg!" as it dies.',
-        bg: "url('assests/battle.jpg')",
+        bg: "url('assets/battle.jpg')",
         rotation: -120
     },
     {
         name: "lose",
         text: "Game Over. You die. &#x2620;",
-        bg: "url('assests/battle.jpg')",
+        bg: "url('assets/battle.jpg')",
         rotation: -120
     },
     {
         name: "win",
         text: "You defeat the dragon! YOU WIN THE GAME! &#x1F389;",
-        bg: "url('assests/battle.jpg')",
+        bg: "url('assets/battle.jpg')",
         rotation: -120
     }
 ];
@@ -628,14 +647,25 @@ function skillButtons() {
     skillIcons[0].onclick = () => attack(heros[currentHero].skills[0]);
     skillIcons[1].onclick = () => attack(heros[currentHero].skills[1]);
     skillIcons[2].onclick = () => attack(heros[currentHero].skills[2]);
-    skillIcons[3].onclick = goTown;
+
+    skillIcons[3].onclick = () => {
+        let tempRotation = targetRotation;
+        goTown();
+        if(Math.abs(tempRotation - THREE.MathUtils.degToRad(120)) < 0.001) {
+            console.log(tempRotation);
+            rotateWorld("right");
+        } else if(Math.abs(tempRotation - THREE.MathUtils.degToRad(-120)) < 0.001) {
+            console.log(tempRotation);
+            rotateWorld("left");
+        }
+    }
 
     const skillCosts = document.querySelectorAll(".skill-cost");
     skillCosts[0].innerText = heroSkills[heros[currentHero].skills[0]].energyCost / 20;
     skillCosts[1].innerText = heroSkills[heros[currentHero].skills[1]].energyCost / 20;
     skillCosts[2].innerText = heroSkills[heros[currentHero].skills[2]].energyCost / 20;
 
-    const placeHolder = "assests/placeholder.png";
+    const placeHolder = "assets/placeholder.png";
     const skillImages = document.querySelectorAll(".skill-image");
     for (let i = 0; i < skillImages.length - 1; i++) {
         const skillIndex = heros[currentHero].skills[i];
@@ -672,7 +702,7 @@ function update(location) {
     energyBox.style.display = "none";
 
     if (location.name == "cave") {
-        pageWindow.style.display = "flex";
+        pageWindow.style.display = "grid";
         monstersPage();
         isPageOpen = true;
         closeNavButton();
@@ -716,18 +746,12 @@ function monstersPage() {
         });
     }, 400);
 
-    p1s[0].innerText = monsters[0].name;
-    p1s[1].innerText = monsters[1].name;
-    p1s[2].innerText = monsters[2].name;
-    p2s[0].innerText = "level " + monsters[0].level;
-    p2s[1].innerText = "level " + monsters[1].level;
-    p2s[2].innerText = "level " + monsters[2].level;
-    imgs[0].src = monsters[0].image;
-    imgs[1].src = monsters[1].image;
-    imgs[2].src = monsters[2].image;
-    pageTiles[0].onclick = fightSlime;
-    pageTiles[1].onclick = fightSlimeGroup;
-    pageTiles[2].onclick = fightBeast;
+    for(let i = 1; i < monsters.length; i++) {
+        p1s[i - 1].innerText = monsters[i].name;
+        p2s[i - 1].innerText = "level " + monsters[i].level;
+        imgs[i - 1].src = monsters[i].image;
+        pageTiles[i - 1].onclick = monsters[i].fightFunction;
+    }
 }
 function closeNavButton() {
     const navLayer = document.querySelector(".nav-layer");
@@ -741,13 +765,12 @@ function goTown() {
     stopMonsterCombat();
     update(locations[0]);
     targetRotation = 0;
-    navigate()
+    navigate();
 }
 
 let isShopOpen = false;
 function goShop() {
     goTown();
-
     const shopPageTiles = document.querySelectorAll('.shop-page-item');
     shopPageTiles[0].onclick = buyHealthRegen;
     shopPageTiles[1].onclick = buyHealth;
@@ -789,21 +812,33 @@ function goCave() {
 }
 
 function fightSlime() {
-    fighting = 0;
-    fightTimeOut();
-}
-function fightSlimeGroup() {
     fighting = 1;
     fightTimeOut();
 }
-function fightBeast() {
+function fightSlimeGroup() {
     fighting = 2;
     fightTimeOut();
 }
-function fightDragon() {
+function fightBeast() {
     fighting = 3;
     fightTimeOut();
 }
+function fightPheonix() {
+    fighting = 4;
+    fightTimeOut();
+}
+function fightDragon() {
+    playTeleportAudio();
+    fighting = 0;
+    fightTimeOut();
+}
+const randomMonster = document.querySelector(".random-monster");
+function randomMonsterGen() {
+    let randomMonsterIndex = Math.floor(Math.random() * (monsters.length - 1)) + 1;;
+    fighting = randomMonsterIndex;
+    fightTimeOut();
+}
+randomMonster.onclick = randomMonsterGen;
 
 function fightTimeOut() {
     //to play animation of bounse for page tiles in cave
@@ -1089,7 +1124,7 @@ function goFight() {
     heroBattleName.innerText = heros[currentHero].name;
     heroBattleLevel.innerText = level;
 
-    if(fighting === 3) {
+    if(fighting === 0) {
         dragonStats.style.display = "flex";
         dragonLevel.innerText = monsters[fighting].level;
         dragonProgress(monsterHealth);
@@ -1108,7 +1143,7 @@ function goFight() {
 }
 let previousLayer = null;
 function dragonProgress(currentHP) {
-    const dragon = monsters[fighting];
+    const dragon = monsters[0];
 
     const totalHP = dragon.health;
     const totalLayers = dragon.level / 2;
@@ -1254,6 +1289,11 @@ function attack(skill) {
             setTimeout(() => {
                 winGame();
             }, 500);
+        } else if (monsters[fighting].specialEffect === "rebirth") {
+            dialog.innerText = monsters[fighting].name + " rebirth!";
+            monsterHealth = 0;
+            monsterHealth = monsters[fighting].health;
+            monsterProgress(monsterHealth);
         } else {
             setTimeout(() => {
                 stopMonsterCombat();
@@ -1339,7 +1379,7 @@ function getMonsterAttackValue(level) {
 function defeatMonster() {
     const prevGold = gold;
     const prevXp = xp;
-    gold += Math.floor(Math.random() * monsters[fighting].level * 5);
+    gold += Math.floor(Math.random() * monsters[fighting].level * 10 - level);
     xp += Math.floor(Math.random() * monsters[fighting].level * 10);
     animateNumber(goldText, prevGold, gold);
     iconsPulse("coinIcon");
@@ -1467,7 +1507,7 @@ function luckResult(rarity) {
 /* Lucky Block End*/
 
 /* Animations and Visuals */
-document.querySelectorAll('.bar-buttons, .page-item, .shop-page-item, .skills')
+document.querySelectorAll('.bar-buttons, .page-item, .shop-page-item, .skills, .random-monster')
 .forEach(btn => {
     btn.addEventListener('click', () => {
         btn.classList.add('bounce-animation');
@@ -1606,7 +1646,7 @@ window.addEventListener('mousemove', (e) => {
     cursorDot.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
 });
 const hoverTargets = document.querySelectorAll(
-    ".button, .nav-button, .bar-buttons, .game-element-icon, .shop-page-item, .closeAd, .page-item, .skills"
+    ".button, .nav-button, .bar-buttons, .game-element-icon, .shop-page-item, .closeAd, .page-item, .skills, .random-monster"
 );
 
 hoverTargets.forEach(el => {

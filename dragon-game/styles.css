@@ -30,7 +30,7 @@
 }
 @font-face {
 	font-family: "MainFont";
-	src: url("assests/WowDino.ttf");
+	src: url("assets/WowDino.ttf");
 	font-style: normal;
 	font-weight: normal;
 }
@@ -761,7 +761,7 @@ main {
 	transform: translateX(-50%);
 	border-radius: 12px;
 	background-color: transparent;
-	background-image: url("assests/heroBg.png");
+	background-image: url("assets/heroBg.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	display: none;
@@ -803,7 +803,7 @@ main {
 	transform: translateX(-50%);
 	display: none;
 	background-color: transparent;
-	background-image: url("assests/inventoryBg.png");
+	background-image: url("assets/inventoryBg.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	animation: entry 0.5s ease-out;
@@ -902,17 +902,40 @@ main {
 /* monster page */
 .page-box, .shop-page-box {
 	left: 50%;
+	transform: translateX(-50%);
 	display: none;
 }
 .page-box {
-	top: 50%;
-	width: 340px;
-	height: 140px;
+	top: 10%;
+	width: 350px;
 	padding: 0.5rem;
-	transform: translate(-50%, -50%);
 	background-color: var(--accent);
+	grid-template-columns: repeat(3, auto);
 	gap: 1rem;
 	border-radius: 12px;
+}
+.random-monster {
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: var(--accent-2);
+	padding: 0.5rem 0.8rem;
+	border-radius: 8px;
+	color: white;
+	border: 2px solid var(--gold);
+	box-shadow: 0 0 8px white, 0 0 8px 1px var(--gold);
+	cursor: pointer;
+	animation: boxShadowGlow 1s ease infinite;
+}
+@keyframes boxShadowGlow {
+	from {
+		box-shadow: 0 0 8px white, 0 0 8px 1px var(--gold);
+		color: white;
+	}
+	to {
+		box-shadow: 0 0 12px 1px var(--gold);
+		color: var(--gold);
+	}
 }
 .page-item {
 	width: 100px;
@@ -922,7 +945,7 @@ main {
 	padding: 0.5rem;
 	border-radius: 8px;
 	border: 2px solid var(--accent-shadow);
-	box-shadow: 0 0 1px 1px black;
+	box-shadow: 0 1px 6px 1px black;
 	cursor: pointer;
 	overflow: hidden;
 	transition: all 0.2s ease;
@@ -952,24 +975,13 @@ main {
 	bottom: 0;
 	background-color: var(--accent-text);
 }
-.page-box {
-	top: 50%;
-	width: 340px;
-	height: 140px;
-	padding: 0.5rem;
-	transform: translate(-50%, -50%);
-	background-color: var(--accent);
-	gap: 1rem;
-	border-radius: 12px;
-}
 /* shop */
 .shop-page-box {
 	top: 0%;
 	width: 340px;
 	height: 460px;
-	transform: translateX(-50%);
 	background-color: transparent;
-	background-image: url("assests/shopBg.png");
+	background-image: url("assets/shopBg.png");
 	background-size: cover;
 	animation: entry 0.4s ease;
 }
@@ -1108,7 +1120,7 @@ main {
 	min-width: 320px;
 	min-height: 480px;
 	background-color: var(--common);
-	background-image: url('assests/ic_sun.svg');
+	background-image: url('assets/ic_sun.svg');
 	background-repeat: repeat;
 }
 .lucky-game-cover {
@@ -1315,6 +1327,7 @@ main {
 	background-color: rgba(255, 255, 255, 0.3);
 	border: 2px solid var(--gold);
 	border-radius: 0 999px 999px 0;
+	overflow: hidden;
 	z-index: -1;
 }
 
@@ -1386,6 +1399,7 @@ main {
 	aspect-ratio: 1 / 1;
 	position: absolute;
 	overflow: hidden;
+	z-index: 10;
 	display: none;
 }
 .skill1-inner {
