@@ -1688,6 +1688,9 @@ main {
 	}
 }
 @media (max-width: 550px) {
+	.hero-battle-stats {
+		gap: 0.25rem;
+	}
 	.special-effects-box {
 		width: 1rem;
 		grid-template-columns: repeat(1, auto);
@@ -1696,7 +1699,9 @@ main {
 	.special-effects-icon {
 		width: 1rem;
 	}
-
+	.dialog {
+		bottom: calc(var(--bars-height) + 0.5rem);
+	}
 }
 
 .cursor-dot, .cursor-dot-inner, .cursor-dot-core {
