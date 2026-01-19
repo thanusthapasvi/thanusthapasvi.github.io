@@ -41,18 +41,12 @@ worldScene.add(moon);
 const shopLight1 = new THREE.PointLight(0xffaa33, 3, 5); // color, intensity, distance
 shopLight1.position.set(0, 2.5, -11.5);
 world.add(shopLight1);
-const shopLight2 = new THREE.PointLight(0xffaa33, 2, 2);
-shopLight2.position.set(-1, 0.5, -11.3);
+const shopLight2 = new THREE.PointLight(0xffffff, 3, 5);
+shopLight2.position.set(-3, 1, -9);
 world.add(shopLight2);
-const shopLight3 = new THREE.PointLight(0xffaa33, 2, 2);
-shopLight3.position.set(1, 0.5, -11.3);
+const shopLight3 = new THREE.PointLight(0xffffff, 3, 5);
+shopLight3.position.set(3, 1, -9);
 world.add(shopLight3);
-const shopLight4 = new THREE.PointLight(0xffffff, 3, 5);
-shopLight4.position.set(-3, 1, -9);
-world.add(shopLight4);
-const shopLight5 = new THREE.PointLight(0xffffff, 3, 5);
-shopLight5.position.set(3, 1, -9);
-world.add(shopLight5);
 
 
 const dragonLight1 = new THREE.PointLight(0xff33ff, 10, 5);
@@ -278,9 +272,9 @@ function animate() {
 
     // world aniamtions
     world.rotation.y += (targetRotation - world.rotation.y) * 0.1;
-
+    // torch flicker
     torchFires.forEach(({ fireLight, fire }) => {
-        fireLight.intensity = 2.5 + Math.random() * 0.6;
+        fireLight.intensity = 2.5 + Math.random() * 0.5;
         fire.scale.y = 1 + Math.sin(Date.now() * 0.015) * 0.1;
     });
 
@@ -1108,7 +1102,7 @@ function skillEnergyCooldown() {
     }
 }
 
-let isShieldActive;
+let isShieldActive, isMonsterAbilityUsed;
 function goFight() {
     update(locations[2]);
     
@@ -1134,7 +1128,8 @@ function goFight() {
         monsterLevel.innerText = monsters[fighting].level;
         monsterProgress(monsterHealth);
     }
-    startMonsterCombat()
+    startMonsterCombat();
+    isMonsterAbilityUsed = false;
 
     initCameraForContainer(monsterCamera, monsterContainer);
     loadMonsterModel(monsters[fighting].name);
@@ -1289,11 +1284,12 @@ function attack(skill) {
             setTimeout(() => {
                 winGame();
             }, 500);
-        } else if (monsters[fighting].specialEffect === "rebirth") {
+        } else if (monsters[fighting].specialEffect === "rebirth" && isMonsterAbilityUsed) {
             dialog.innerText = monsters[fighting].name + " rebirth!";
             monsterHealth = 0;
             monsterHealth = monsters[fighting].health;
             monsterProgress(monsterHealth);
+            isMonsterAbilityUsed = true;
         } else {
             setTimeout(() => {
                 stopMonsterCombat();
