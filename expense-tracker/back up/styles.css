@@ -1,0 +1,403 @@
+		:root {
+			--color: #209fdf;
+			--color2: #9f20df;
+			--black: hsl(0deg, 0%, 0%);
+			--text: #000000;
+		}
+		*, *::after, *::before {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		input, button {
+			border: none;
+			outline: none;
+		}
+		body, html {
+			width: 100%;
+			height: 100%;
+			user-select: none;
+		}
+		header {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: clamp(50px, 4rem, 80px);
+			background-color: var(--color);
+			color: var(--text);
+			padding: 0.5rem;
+			justify-content: space-between;
+			z-index: 20;
+			border-bottom: 1px solid var(--color2);
+			box-shadow: 0 1px 4px var(--color2);
+		}
+		body {
+			background-color: var(--black);
+			position: relative;
+		}
+		h1 {
+			font-size: 2.5rem;
+		}
+		#menu {
+			border-radius: 50%;
+		}
+		.menu-pop {
+			display: none;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: clamp(280px, 25%, 400px);
+			height: clamp(340px, 20%, 400px);
+			transform: translate(-50%, -50%);
+			background-color: transparent;
+			z-index: 10;
+		}
+		.menu-content {
+			width: 100%;
+			height: 100%;
+			position: relative;
+			padding: 1rem;
+			padding-top: 3rem;
+			gap: 0.5rem;
+			background-color: hsl(from var(--black) h s calc(l + 15));
+			border-radius: 12px;
+		}
+		.menu-row {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+		.menu-label {
+			font-size: 1.2rem;
+			color: white;
+		}
+		input[type="color"] {
+			width: 2rem;
+			height: 2rem;
+		}
+		#first-day {
+			width: 4rem;
+			height: 2rem;
+			font-size: 1.2rem;
+		}
+		.reset-budget, .default, .set-total-budget {
+			font-size: 1.2rem;
+			width: 150px;
+			height: 2rem;
+			padding: 4px 6px;
+			border: 2px solid transparent;
+			color: white;
+		}
+		.set-total-budget {
+			background: linear-gradient(120deg, #1212bb, #3434ff, #1212bb);
+		}
+		.default, .reset-budget {
+			background: linear-gradient(120deg, #aa1212, #ff4545, #aa1212);
+		}
+		.default:active, .reset-budget:active, .set-total-budget:active {
+			transform: scale(0.9);
+		}
+		.save {
+			position: absolute;
+			bottom: 1rem;
+			left: 50%;
+			width: 5rem;
+			height: 2rem;
+			font-size: 1.4rem;
+			transform: translateX(-50%);
+			
+		}
+		.save:active {
+			transform: scale(0.9) translateX(-50%);
+		}
+
+		.budget-track {
+			width: clamp(280px, 30%, 500px);
+			height: clamp(280px, 30%, 500px);
+			background-color: hsl(from var(--black) h s calc(l + 20));
+			display: block;
+		}
+		.top-row, .bottom-row {
+			width: 100%;
+			padding: 0.5rem;
+		}
+		.top-row {
+			position: absolute;
+			height: 4.5rem;
+			top: 0;
+			left: 0;
+			background-color: hsl(from var(--black) h s calc(l + 30));
+			color: var(--text);
+			border-radius: 12px 12px 0 0;
+			text-align: center;
+		}
+		.bottom-row {
+			margin-top: 5rem;
+			height: calc(100% - 4.5rem);
+			color: white;
+			gap: 1rem;
+		}
+		.start-total {
+			gap: 1rem;
+			& p {
+				color: white;
+			}
+			& span {
+				color: white;
+			}
+		}
+		.current-amount {
+			color: white;
+			font-size: 2rem;
+			font-weight: bold;
+		}
+		.start-amount {
+			color: white;
+			font-weight: bold;
+		}
+		.add-amount-label {
+			font-size: 2rem;
+		}
+		.add {
+			width: 5rem;
+			height: 2rem;
+			font-size: 1.4rem;
+		}
+		.add:active {
+			transform: scale(0.9);
+		}
+
+		.set-total-amount {
+			display: none;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: clamp(250px, 25%, 350px);
+			height: 200px;
+			background-color: transparent;
+		}
+		.set-total-amount-main {
+			width: 100%;
+			height: 100%;
+			background-color: black;
+			gap: 1rem;
+			color: white;
+			& .set-total-heading {
+				font-size: 1.4rem;
+			}
+			& button {
+				width: 6rem;
+				height: 2rem;
+				font-size: 1rem;
+			}
+		}
+		.budget-amount-buttons {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 1rem;
+
+			& button {
+				position: relative;
+			}
+		}
+		.close-pop {
+			position: absolute;
+			top: 4px;
+			right: 0.5rem;
+			font-size: 1.3rem;
+			color: white;
+			background-color: transparent;
+			cursor: pointer;
+		}
+		.close-pop:hover {
+			color: red;
+		}
+		.toast {
+			position: fixed;
+			bottom: 2rem;
+			left: 50%;
+			width: clamp(280px, 50%, 480px);
+			height: clamp(2rem, auto, 4rem);
+			transform: translateX(-50%);
+			padding: 0.3rem 0.5rem;
+			border-radius: 0.4rem;
+			background: linear-gradient(to bottom right, #343434, #111111);
+			box-shadow: 0 0 6px 2px #9a9a9a;
+			animation: comeUp 0.5s ease-out;
+
+			& p {
+				text-align: center;
+				font-size: 1.2rem;
+			}
+		}
+		.errorBlock {
+			display: none;
+			& .errorP {
+				color: red;
+			}
+		}
+		.messageBlock {
+			display: none;
+			& .messageP {
+				color: cyan;
+			}
+		}
+		@keyframes comeUp {
+			from {
+				transform: translateX(-50%) translateY(6rem);
+			}
+			to {
+				transform: translateX(-50%) translateY(0rem);
+			}
+		}
+
+		.set-budget-tutorial {
+			display: none;
+			position: absolute;
+			top: calc(120% + 10px);
+			left: 50%;
+			transform: translateX(-50%);
+			min-width: 240px;
+			min-height: 2rem;
+			padding: 4px 6px;
+			background-color: rgba(0, 0, 0, 0.3);
+			color: white;
+			font-size: 1rem;
+			border-radius: 0.5rem;
+			border: 1px solid white;
+			pointer-events: none;
+			z-index: 5;
+
+			& .tutorial-tip {
+				position: absolute;
+				top: -10px;
+				left: 50%;
+				transform: translateX(-50%);
+				width: 10px;
+				height: 10px;
+				background-color: white;
+				clip-path: polygon(50% 0%, 0% 100%, 100% 100%);	
+			}
+		}
+
+		.edit-start {
+			/* pencil icon */
+			display: none;
+		}
+
+		.flex {
+			display: flex;
+		}
+		.align-center {
+			align-items: center;
+		}
+		.justify-center {
+			justify-content: center;
+		}
+		.flex-column {
+			flex-direction: column;
+		}
+		.pointer {
+			cursor: pointer;
+		}
+		.gradient-border {
+			position: relative;
+			border-radius: 12px;
+		}
+		.gradient-border::after {
+			position: absolute;
+			content: "";
+			width: calc(100% + 4px);
+			height: calc(100% + 4px);
+			top: 0;
+			left: 0;
+			transform: translate(-2px, -2px);
+			background: linear-gradient(120deg, var(--color) 25%, var(--color2) 45%, var(--color2) 55%, var(--color) 75%);
+			border-radius: 12px;
+			z-index: -1;
+		}
+		.button-effect {
+			background-color: transparent;
+			border: 3px solid var(--color);
+			border-radius: 4px;
+			color: white;
+		}
+		.menu-button-effect {
+			border-radius: 4px;
+			outline: 3px solid var(--color);
+			outline-offset: -6px;
+			transition: all 0.2s ease;
+		}
+		.money-input {
+			width: 200px;
+			height: 2rem;
+			border-radius: 4px;
+			padding: 0.5rem;
+			background-color: var(--color);
+			color: var(--text);
+			border: 3px solid transparent;
+			font-size: 1.2rem;
+
+		}
+		.money-input:focus {
+			outline: 3px solid var(--color2);
+		}
+		.gradient-text {
+			background: linear-gradient(to right, var(--color), var(--color2));
+			color: transparent;
+			background-clip: text;
+			-webkit-text-stroke: 0.5px black;
+		}
+		@media(max-width: 600px) {
+			h1 {
+				font-size: 2rem;
+			}
+			.add-amount-label {
+				font-size: 1.5rem;
+			}
+		}
+		@media(max-width: 400px) {
+			h1 {
+				font-size: 1.8rem;
+			}
+			.add-amount-label {
+				font-size: 1.2rem;
+			}
+		}
+		@media(hover: hover) and (pointer: fine) {
+			.button-effect:hover {
+				background-color: var(--color);
+				border: 2px solid var(--color);
+				box-shadow: 0 0 6px var(--color);
+				color: var(--text);
+			}
+			.menu-button-effect:hover {
+				outline: 3px solid var(--color2);
+				outline-offset: 3px;
+			}
+			input:focus-visible, button:focus-visible {
+				box-shadow: 2px 2px var(--color), -2px -2px var(--color2), 0 0 4px 2px black;
+				animation: focusAni 1s linear infinite;
+			}
+			@keyframes focusAni {
+				0%, 100% {
+					box-shadow: 2px 2px var(--color), -2px -2px var(--color2), 0 0 4px 2px black;
+				}
+				25% {
+					box-shadow: -2px 2px var(--color), 2px -2px var(--color2), 0 0 4px 2px black;
+				}
+				50% {
+					box-shadow: -2px -2px var(--color), 2px 2px var(--color2), 0 0 4px 2px black;
+				}
+				75% {
+					box-shadow: 2px -2px var(--color), -2px 2px var(--color2), 0 0 4px 2px black;
+				}
+			}
+			.money-input:hover {
+				box-shadow: 0 0 6px 2px var(--color);
+			}
+		}
