@@ -2,6 +2,7 @@ class Expense {
 	constructor(name, amount) {
 		this.name = name;
 		this.amount = amount;
+		this.timeStamp = new Date().toLocaleTimeString();
 	}
 }
 
@@ -51,6 +52,9 @@ const setTotalBtn = document.querySelector(".set-budget");
 let isSetTotalOpen = false;
 function openSetTotalPop() {
 	if (isSetTotalOpen) {
+		if(totalAmount <= 0) {
+			return;
+		}
 		setTotalPop.style.display = "none";
 		mainApp.style.display = "block"
 		isSetTotalOpen = false;
@@ -81,6 +85,14 @@ let day = new Date();
 let today = day.toLocaleDateString();
 let todaySpent = [];
 
+function renderProgress() {
+	const progress = document.querySelector(".progress");
+	let per = (currentAmount / totalAmount) * 180;
+
+	progress.style.background = `conic-gradient(var(--color) 0deg, var(--color2) ${per}deg, hsl(from var(--black) h s calc(l + 25)) ${per}deg)`;
+}
+renderProgress();
+
 function addSpentAmount() {
 	let name = addSpentName.value;
 	let number = addInput.value;
@@ -99,6 +111,9 @@ function addSpentAmount() {
 
 		todaySpent.push(new Expense(name, number));
 		localStorage.setItem(today, JSON.stringify(todaySpent));
+
+		loadExpensesForDate(day);
+		renderProgress();
 	}
 }
 
@@ -123,7 +138,7 @@ function renderExpenses() {
 	if(viewingExpense.length === 0) {
 		view.innerHTML = `
 			<tr>
-				<td colspan="3">No expenses recorded for this date.</td>
+				<td colspan="4">No expenses recorded for this date.</td>
 			</tr>
 		`;
 	}
@@ -135,6 +150,7 @@ function renderExpenses() {
 				<td>${i+1}</td>
 				<td>${item.name}</td>
 				<td>${item.amount}</td>
+				<td>${item.timeStamp}</td>
 			</tr>
 		`
 	}
@@ -166,7 +182,7 @@ function setTotalAmount() {
 	openSetTotalPop();
 }
 //total amount set
-function addMonthlyTotal () {
+function addMonthlyTotal() {
 	let number = setTotalInput.value;
 	if (!number || isNaN(parseFloat(number)) || number <= 0) {
 		errorMessage("Invalid Number! Please enter a valid number");
@@ -178,6 +194,8 @@ function addMonthlyTotal () {
 		localStorage.setItem('totalAmount', totalAmount);
 		localStorage.setItem('currentAmount', currentAmount);
 		message("Total Budget Amount set Successfully");
+
+		renderProgress();
 		openSetTotalPop();
 	}
 }
