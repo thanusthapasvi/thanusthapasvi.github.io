@@ -17,7 +17,6 @@ function zeroRemove(input) {
 
 const menuPop = document.querySelector(".menu-pop"); //menu
 const setTotalPop = document.querySelector(".set-total-amount"); //add total
-const mainApp = document.querySelector(".budget-track"); //main spent interface
 
 // settings
 const menu = document.querySelector("#menu");
@@ -25,11 +24,9 @@ let isMenuOpen = false;
 function openMenu() {
 	if (isMenuOpen) {
 		menuPop.style.display = "none";
-		mainApp.style.display = "block"
 		isMenuOpen = false;
 	} else {
 		menuPop.style.display = "flex";
-		mainApp.style.display = "none"
 		isMenuOpen = true;
 	}
 }
@@ -56,13 +53,11 @@ function openSetTotalPop() {
 			return;
 		}
 		setTotalPop.style.display = "none";
-		mainApp.style.display = "block"
 		isSetTotalOpen = false;
 	} else {
 		setTotalPop.style.display = "flex";
 		if(totalAmount > 0)
 			setTotalInput.value = totalAmount;
-		mainApp.style.display = "none"
 		isSetTotalOpen = true;
 	}
 }
@@ -87,9 +82,11 @@ let todaySpent = [];
 
 function renderProgress() {
 	const progress = document.querySelector(".progress");
-	let per = (currentAmount / totalAmount) * 180;
+	const endDot = document.querySelector(".dot2");
+	let per = (currentAmount / totalAmount) * 360;
 
-	progress.style.background = `conic-gradient(var(--color) 0deg, var(--color2) ${per}deg, hsl(from var(--black) h s calc(l + 25)) ${per}deg)`;
+	progress.style.background = `conic-gradient(var(--color) 0deg, var(--color2) ${per}deg, hsl(from var(--primary-color) h s calc(l + 25)) ${per}deg)`;
+	endDot.style.transform = `rotate(${per}deg) translateX(-50%)`;
 }
 renderProgress();
 
@@ -236,8 +233,8 @@ function message(message) {
 }
 
 // colors
-const defaultColor1 = '#209fdf';
-const defaultColor2 = '#9f20df';
+const defaultColor1 = '#20ffff';
+const defaultColor2 = '#ff20ff';
 
 const color1 = document.querySelector("#color-1");
 const color2 = document.querySelector("#color-2");
@@ -320,11 +317,5 @@ function textColor() {
 		document.documentElement.style.setProperty('--text', "#FFFFFF");
 	} else {
 		document.documentElement.style.setProperty('--text', "#000000");
-	}
-
-	if (getLightness(localStorage.getItem('color2')) <= 50) {
-		menu.style.backgroundColor = "#ffffffaa";
-	} else {
-		menu.style.backgroundColor = "#121212aa";
 	}
 }

@@ -21,31 +21,33 @@
 	<main>
 		<section>
 			<div class="budget-track gradient-border">
-				<div class="top-row">
+				<div class="budget-track-content flex-center">
 					<div class="progress">
-						<div class="progress-inner">
+						<div class="dot1"></div>
+						<div class="dot2"></div>
+						<div class="progress-inner flex-center">
 							<span class="current-amount">0</span>
 							<span class="start-amount">0</span>
 						</div>
 					</div>
-				</div>
-				<div class="bottom-row flex-center flex-column">
-					<div class="input-box">
-						<label for="add-spent-name" class="input-label">Name : </label>
-						<input type="text" name="name of expense" id="add-spent-name" class="input-field add-spent-name"
-							placeholder="House Rent" maxlength="12" />
+					<div class="budget-track-input flex-center flex-column">
+						<div class="input-box">
+							<label for="add-spent-name" class="input-label">Name : </label>
+							<input type="text" name="name of expense" id="add-spent-name"
+								class="input-field add-spent-name" placeholder="House Rent" maxlength="12" />
+						</div>
+						<div class="input-box">
+							<label for="add-spent-amount" class="input-label">Amount : </label>
+							<input type="text" inputmode="numeric" pattern="[0-9]*" name="amount" id="add-spent-amount"
+								class="input-field add-spent-amount" placeholder="0" maxlength="9" />
+						</div>
+						<button type="submit" class="btn primary-btn" onclick="addSpentAmount()">Add</button>
 					</div>
-					<div class="input-box">
-						<label for="add-spent-amount" class="input-label">Amount : </label>
-						<input type="text" inputmode="numeric" pattern="[0-9]*" name="amount" id="add-spent-amount"
-							class="input-field add-spent-amount" placeholder="0" maxlength="9" />
-					</div>
-					<button type="submit" class="btn secondary-btn" onclick="addSpentAmount()">Add</button>
 				</div>
 			</div>
 		</section>
 		<section>
-			<div class="expense-view-controls flex-center">
+			<div class="expense-view-controls flex">
 				<button class="btn secondary-btn" onclick="prevDate()">Prev</button>
 				<p class="current-expense-date"></p>
 				<button class="btn secondary-btn" onclick="nextDate()">Next</button>
@@ -53,7 +55,7 @@
 			<table>
 				<thead>
 					<tr>
-						<th>S.No</th>
+						<th>No</th>
 						<th>Name</th>
 						<th>Amount</th>
 						<th>Time Stamp</th>
@@ -72,8 +74,11 @@
 				<p onclick="openSetTotalPop()" class="pop-close">X</p>
 			</div>
 			<div class="pop-body">
-				<input type="text" inputmode="numeric" pattern="[0-9]*" name="monthly amount" id="set-total"
-					class="input-field" placeholder="1000" maxlength="8" oninput="zeroRemove(this)" />
+				<div class="input-box">
+					<label class="input-label">Enter Monthly Budget</label>
+					<input type="text" inputmode="numeric" pattern="[0-9]*" name="monthly amount" id="set-total"
+						class="input-field" placeholder="1000" maxlength="8" oninput="zeroRemove(this)" />
+				</div>
 				<button class="set-budget btn primary-btn" onclick="addMonthlyTotal()">Set Amount</button>
 			</div>
 		</div>

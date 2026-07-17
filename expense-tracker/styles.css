@@ -2,7 +2,7 @@
 	--header-height: 3.5rem;
 	--color: #209fdf;
 	--color2: #9f20df;
-	--black: hsl(0deg, 0%, 0%);
+	--primary-color: hsl(210, 70%, 2%);
 	--text: #000000;
 }
 
@@ -30,17 +30,17 @@ header {
 	left: 0;
 	width: 100%;
 	height: var(--header-height);
-	background-color: var(--color);
-	color: var(--text);
-	padding: 0 0.5rem;
+	background-color: hsl(from var(--primary-color) h s calc(l + 15));
+	color: white;
+	padding: 0 0.8rem;
 	justify-content: space-between;
 	z-index: 20;
-	border-bottom: 1px solid var(--color2);
-	box-shadow: 0 1px 4px var(--color2);
+	border-bottom: 1px solid hsl(from var(--primary-color) h s calc(l + 30));
+	box-shadow: 0 1px 4px hsl(from var(--primary-color) h s calc(l + 30));
 }
 
 body {
-	background-color: var(--black);
+	background-color: var(--primary-color);
 	position: relative;
 }
 
@@ -62,10 +62,7 @@ section {
 	gap: 1.5rem;
 }
 section:first-of-type {
-	height: 70vh;
-}
-section:nth-of-type(even) {
-	background-color: hsl(from var(--black) h s calc(l + 10));
+	height: 80vh;
 }
 
 h1 {
@@ -76,23 +73,49 @@ table {
 	width: clamp(300px, 90%, 480px);
 	border-collapse: collapse;
 	color: white;
+	margin-bottom: 1rem;
+}
+th:first-of-type {
+	border-radius: 0.4rem 0 0 0;
+}
+th:last-of-type {
+	border-radius: 0 0.4rem 0 0;
+}
+thead {
+	color: hsl(from var(--primary-color) h calc(s + 30) calc(l + 70));
+	background-color: hsl(from var(--primary-color) h s calc(l + 20));
+}
+tbody {
+	color: hsl(from var(--primary-color) h calc(s + 10) calc(l + 80));
+	background-color: hsl(from var(--primary-color) h s calc(l + 10));
 }
 th,td {
 	font-size: 1.3rem;
-	border: 1px solid white;
 	padding: 0.4rem 0.6rem;
+	border: 1px solid hsl(from var(--primary-color) h s calc(l + 60));
 }
 
+
 .expense-view-controls {
+	width: clamp(300px, 90%, 480px);
+	padding: 0.4rem 0.8rem;
+	align-items: center;
+	justify-content: space-between;
+	border-radius: 0.5rem;
+	border: 1px solid hsl(from var(--primary-color) h s calc(l + 30));
+	background-color: hsl(from var(--primary-color) h s calc(l + 15));
 	gap: 2rem;
 }
 .current-expense-date {
 	color: white;
-	font-size: 1.2rem;
+	font-size: 1.4rem;
 }
 
 #menu {
 	border-radius: 50%;
+}
+#menu:hover {
+	background-color: hsl(from var(--primary-color) h s calc(l + 25));
 }
 
 .pop-cover {
@@ -101,7 +124,9 @@ th,td {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(3px);
+	-webkit-backdrop-filter: blur(3px);
 	display: none;
 	align-items: center;
 	justify-content: center;
@@ -117,10 +142,10 @@ th,td {
 	}
 }
 .popup {
-	width: clamp(300px, 90%, 480px);
+	width: clamp(300px, 90%, 380px);
 	min-height: 240px;
 	max-height: 60%;
-	background-color: hsl(from var(--black) h s calc(l + 15));
+	background-color: hsl(from var(--primary-color) h s calc(l + 15));
 	padding: 0 1rem 1rem 1rem;
 	display: flex;
 	flex-direction: column;
@@ -187,75 +212,73 @@ input[type="color"] {
 }
 
 .budget-track {
-	width: clamp(280px, 30%, 500px);
-	height: clamp(280px, 30%, 500px);
-	display: block;
+	width: clamp(290px, 90%, 380px);
+	height: clamp(380px, 100%, 420px);
 }
-
-.top-row,
-.bottom-row {
-	position: absolute;
-	left: 0;
+.budget-track-content {
 	width: 100%;
-	padding: 0.5rem;
+	height: 100%;
+	flex-direction: column;
+	border-radius: inherit;
+	padding: 1rem;
+	background-color: hsl(from var(--primary-color) h s calc(l + 15));
 }
-
-.top-row {
-	top: 0;
-	height: 4.5rem;
-	background-color: hsl(from var(--black) h s calc(l + 30));
-	color: var(--text);
-	border-radius: 12px 12px 0 0;
-	text-align: center;
-	display: flex;
-	align-items: start;
-	justify-content: center;
-	z-index: 1;
-}
-
-.bottom-row {
-	top: 4.5rem;
-	height: calc(100% - 4.5rem);
-	background-color: hsl(from var(--black) h s calc(l + 20));
-	color: white;
-	border-radius: 0 0 12px 12px;
-	gap: 1rem;
-	z-index: 3;
+.budget-track-input {
+	width: 100%;
+	gap: 0.8rem;
 }
 
 .progress, .progress-inner {
 	aspect-ratio: 1/1;
 	border-radius: 50%;
-	border: 1px solid hsl(from var(--black) h s calc(l + 20));
+	border: 1px solid hsl(from var(--primary-color) h s calc(l + 10));
 	display: flex;
 	align-items: center;
 	color: white;
+	transition: transform 0.2s ease;
 }
 .progress {
+	position: relative;
 	cursor: pointer;
-	position: absolute;
-	top: -1.5rem;
-	left: 50%;
 	justify-content: center;
-	width: 12rem;
-	z-index: 2;
-	background-color: ;
-	background: conic-gradient(var(--color) 0deg, var(--color2) 100deg, hsl(from var(--black) h s calc(l + 25)) 100deg);
-	transform: rotate(-90deg) translateY(-50%);
-	transition: 0.2s ease;
+	width: 10rem;
+	box-shadow: inset 0 0 0.3rem black, 0 0 0.3rem black;
+	background: conic-gradient(var(--color) 0deg, var(--color2) 360deg, hsl(from var(--primary-color) h s calc(l + 20)) 360deg);
 }
-.progress:hover {
-	transform: rotate(-90deg) translateY(-50%) scale(1.2);
+.progress:hover .progress-inner {
+	transform: translate(-50%, -50%) scale(1.07);
 }
 .progress-inner {
-	width: 10rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 8rem;
 	flex-direction: column;
-	background-color: hsl(from var(--black) h s calc(l + 30));
-	transform: rotate(90deg);
+	box-shadow: 0 0 0.3rem black;
+	background-color: hsl(from var(--primary-color) h s calc(l + 30));
+	z-index: 3;
 }
-
+.dot1, .dot2 {
+	position: absolute;
+	width: 1rem;
+	aspect-ratio: 1 / 1;
+	border-radius: 50%;
+	transform: translateX(-50%);
+	z-index: 1;
+}
+.dot1 {
+	top: 0;
+	left: 50%;
+	background-color: var(--color);
+}
+.dot2 {
+	top: 0;
+	left: 50%;
+	background-color: var(--color2);
+	transform-origin: 0 5rem;
+}
 .current-amount {
-	margin-top: 1rem;
 	font-size: 2rem;
 	padding: 0rem 0.5rem;
 	border-bottom: 1px solid white;
@@ -263,11 +286,7 @@ input[type="color"] {
 }
 .start-amount {
 	padding: 0.1rem 0.5rem;
-	font-size: 1rem;
-}
-
-.add-amount-label {
-	font-size: 2rem;
+	font-size: 1.3rem;
 }
 
 .toast {
@@ -371,8 +390,11 @@ input[type="color"] {
 	transform: scale(0.9);
 }
 .primary-btn {
-	background: var(--color);
-	border: 2px solid var(--color);
+	width: 100%;
+	border-radius: 999px;
+	background: linear-gradient(to right, var(--color), var(--color2));
+	border: 2px solid hsl(from var(--primary-color) h s calc(l + 25));
+	color: var(--text);
 }
 .danger-btn {
 	border: 2px solid red;
@@ -390,19 +412,21 @@ input[type="color"] {
 }
 
 .input-box {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 0.4rem;
 }
+.input-label {
+	color: #ccc;
+}
 .input-field {
-	width: 200px;
-	height: 2rem;
-	padding: 0.5rem;
-	background-color: var(--color);
-	border-bottom: 3px solid var(--color2);
-	color: var(--text);
+	padding: 0.5rem 0.7rem;
+	border-radius: 0.5rem;
+	color: white;
+	background-color: hsl(from var(--primary-color) h s calc(l + 10));
+	border: 1.5px solid var(--color);
 	font-size: 1.2rem;
-
 }
 
 .gradient-text {
@@ -456,21 +480,23 @@ input[type="color"] {
 	input:focus-visible,
 	button:focus-visible {
 		outline-offset: 4px;
-		outline: 3px solid var(--color2);
+		outline: 2px solid var(--color2);
 		animation: outline 0.7s ease infinite;
 	}
 	@keyframes outline {
 		from {
 			outline-offset: 4px;
-			outline: 3px solid var(--color2);
+			outline: 2px solid var(--color2);
+			box-shadow: 0 0 0.4rem var(--color);
 		}
 		to {
 			outline-offset: 2px;
-			outline: 3px solid var(--color);
+			outline: 2px solid var(--color);
+			box-shadow: 0 0 0.4rem var(--color2);
 		}
 	}
 
 	.input-field:hover {
-		box-shadow: 0 0 6px 2px var(--color2);
+		box-shadow: 0 0 6px 2px var(--color);
 	}
 }
